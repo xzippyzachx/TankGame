@@ -10,6 +10,11 @@ Entity::Entity(const char* fileName, float posX, float posY)
 	sprite->SetScale(5.0f);
 }
 
+void Entity::SetPosition(float x, float y)
+{
+	sprite->SetPosition(x, y);
+}
+
 void Entity::Update(float deltaTime)
 {
 	sprite->Update(deltaTime);

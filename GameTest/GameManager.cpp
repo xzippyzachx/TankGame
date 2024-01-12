@@ -8,10 +8,17 @@
 //------------------------------------------------------------------------
 #include "app\app.h"
 //------------------------------------------------------------------------
+#include <Box2D.h>
 
 #include "Player.h"
 
 Player* player;
+Entity* box;
+
+b2Vec2 gravity(0.0f, -10.0f);
+b2World world(gravity);
+
+b2Body* body;
 
 
 //------------------------------------------------------------------------
@@ -23,6 +30,26 @@ void Init()
 	glClearColor(0.133f, 0.133f, 0.133f, 1.0f);
 
 	player = new Player(".\\Resources\\Sprites\\human.png", APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
+	box = new Entity(".\\Resources\\Sprites\\human.png", APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
+
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(APP_VIRTUAL_WIDTH / 2.0f, 100.0f);
+	b2Body* groundBody = world.CreateBody(&groundBodyDef);
+	b2PolygonShape groundBox;
+	groundBox.SetAsBox(50.0f, 10.0f);
+	groundBody->CreateFixture(&groundBox, 0.0f);
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
+	body = world.CreateBody(&bodyDef);
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(1.0f, 1.0f);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
+	body->CreateFixture(&fixtureDef);
 }
 
 //------------------------------------------------------------------------
@@ -31,6 +58,11 @@ void Init()
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
+	world.Step(1.0f / 60.0f, 6, 2);
+	b2Vec2 position = body->GetPosition();
+
+	box->SetPosition(position.x, position.y);
+
 	player->Update(deltaTime);
 
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_LEFT_SHOULDER, true))
@@ -55,6 +87,7 @@ void Update(float deltaTime)
 void Render()
 {
 	player->Draw();
+	box->Draw();
 
 
 	//------------------------------------------------------------------------
