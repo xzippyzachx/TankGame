@@ -3,30 +3,35 @@
 
 #include "Player.h"
 
-Player::Player(const char* fileName, float posX, float posY) : Entity(fileName, posX, posY)
+Player::Player() : Entity()
 {
 	float animSpeed = 0.025f;
-	sprite->CreateAnimation(MOVE, speed, { 0,1 });
 }
 
 void Player::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
-
+	
 	float inputX = App::GetController().GetLeftThumbStickX();
 	float inputY = App::GetController().GetLeftThumbStickY();
 
-	if (inputX > 0.1f || inputX < -0.1f || inputY > 0.1f || inputY < -0.1f)
+	if (inputX > 0.25f || inputX < -0.25f || inputY > 0.25f || inputY < -0.25f)
 	{
 		sprite->SetAnimation(MOVE);
-		float x, y;
-		sprite->GetPosition(x, y);
-		x += inputX * speed * deltaTime;
-		y += inputY * speed * deltaTime;
-		sprite->SetPosition(x, y);
+
+		position.x += inputX * speed * deltaTime;
+		position.y += inputY * speed * deltaTime;
 	}
 	else
 	{
 		sprite->SetFrame(0);
 	}
+	
 }
+
+void Player::SetSprite(char* fileName)
+{
+	Entity::SetSprite(fileName);
+	sprite->CreateAnimation(MOVE, speed, { 0,1 });
+}
+

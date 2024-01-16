@@ -3,11 +3,9 @@
 
 #include "Entity.h"
 
-Entity::Entity(const char* fileName, float posX, float posY)
+Entity::Entity()
 {
-	sprite = App::CreateSprite(fileName, 2, 1);
-	sprite->SetPosition(posX, posY);
-	sprite->SetScale(5.0f);
+	
 }
 
 void Entity::Update(float deltaTime)
@@ -17,10 +15,22 @@ void Entity::Update(float deltaTime)
 
 void Entity::Draw()
 {
+	sprite->SetPosition(position.x, position.y);
 	sprite->Draw();
 }
 
 void Entity::Destroy()
 {
 	delete sprite;
+}
+
+void Entity::SetSprite(char* fileName)
+{
+	sprite = App::CreateSprite(fileName, 2, 1);
+	sprite->SetScale(5.0f);
+}
+
+void Entity::SetPosition(Vector2 pos)
+{
+	position = pos;
 }

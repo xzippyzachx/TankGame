@@ -22,7 +22,11 @@ void Init()
 	// Backgound color
 	glClearColor(0.133f, 0.133f, 0.133f, 1.0f);
 
-	player = new Player(".\\Resources\\Sprites\\human.png", APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
+	
+	player = new Player();
+	player->SetSprite(".\\Resources\\Sprites\\human.png");
+	player->SetPosition(Vector2(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f));
+	
 }
 
 //------------------------------------------------------------------------
@@ -55,7 +59,6 @@ void Update(float deltaTime)
 void Render()
 {
 	player->Draw();
-
 
 	//------------------------------------------------------------------------
 	// Example Text.

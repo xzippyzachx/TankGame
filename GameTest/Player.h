@@ -12,8 +12,10 @@ enum STATE
 class Player : public Entity
 {
 public:
-	Player(const char* fileName, float posX, float posY);
+	Player();
 	void Update(float dt) override;
+
+	void SetSprite(char* fileName) override;
 protected:
 	float speed = 0.25f;
 
