@@ -8,21 +8,19 @@
 //------------------------------------------------------------------------
 #include "app\app.h"
 //------------------------------------------------------------------------
+#include "Scene.h"
 
-#include "Player.h"
-
-Player* player;
-
+Scene mainScene;
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
 //------------------------------------------------------------------------
 void Init()
 {
+	mainScene.Init();
+
 	// Backgound color
 	glClearColor(0.133f, 0.133f, 0.133f, 1.0f);
-
-	player = new Player(".\\Resources\\Sprites\\human.png", APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
 }
 
 //------------------------------------------------------------------------
@@ -31,7 +29,7 @@ void Init()
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
-	player->Update(deltaTime);
+	mainScene.Update(deltaTime);
 
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_LEFT_SHOULDER, true))
 	{
@@ -54,9 +52,6 @@ void Update(float deltaTime)
 //------------------------------------------------------------------------
 void Render()
 {
-	player->Draw();
-
-
 	//------------------------------------------------------------------------
 	// Example Text.
 	//------------------------------------------------------------------------
@@ -90,5 +85,5 @@ void Render()
 //------------------------------------------------------------------------
 void Shutdown()
 {	
-	player->Destroy();
+
 }
