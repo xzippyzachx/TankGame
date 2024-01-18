@@ -1,7 +1,7 @@
-#include "stdafx.h"
-#include "app\app.h"
+#include "..\stdafx.h"
+#include "..\app\app.h"
 
-#include "Vector2.h"
+#include "..\math\Vector2.h"
 
 class Entity
 {

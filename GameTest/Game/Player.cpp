@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "app\app.h"
+#include "..\app\app.h"
 
 #include "Player.h"
 
@@ -21,6 +21,8 @@ void Player::Update(float deltaTime)
 
 		position.x += inputX * speed * deltaTime;
 		position.y += inputY * speed * deltaTime;
+
+		std::cout << "Dir: (" << inputX << "," << inputY << ")" << "\n";
 	}
 	else
 	{
