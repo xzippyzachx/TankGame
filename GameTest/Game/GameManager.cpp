@@ -18,6 +18,13 @@ Player* player;
 //------------------------------------------------------------------------
 void Init()
 {
+#ifdef _DEBUG
+	// Init debug console
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+#endif
+
 	// Backgound color
 	glClearColor(0.133f, 0.133f, 0.133f, 1.0f);
 

@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------------------
 #include <windows.h>  // for MS Windows
 #include <cstdio>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <list>
@@ -76,7 +77,7 @@ public:
 	{
 		char textBuffer[64];
 		sprintf(textBuffer, "%s: %0.4f ms", text,m_elapsedTime);
-		App::Print(x, y, textBuffer,1.0f,1.0f,1.0f, GLUT_BITMAP_HELVETICA_10);
+		App::Print(x, y, textBuffer,1.0f,0.0f,1.0f, GLUT_BITMAP_HELVETICA_10);
 	}
 private:	
 	double m_startTime;
@@ -139,20 +140,20 @@ void Idle()
 		
 		gLastTime = currentTime;		
 		RECT tileClientArea;
-		if (GetClientRect(MAIN_WINDOW_HANDLE, &tileClientArea))
+		if (GetClientRect( MAIN_WINDOW_HANDLE, &tileClientArea))
 		{
 			WINDOW_WIDTH = tileClientArea.right - tileClientArea.left;
 			WINDOW_HEIGHT = tileClientArea.bottom - tileClientArea.top;
 		}
 
-		if (App::GetController().CheckButton(APP_ENABLE_DEBUG_INFO_BUTTON))
+		if (App::GetController().CheckButton(APP_ENABLE_DEBUG_INFO_BUTTON) )
 		{
 			gRenderUpdateTimes = !gRenderUpdateTimes;
 		}
 
 		if (App::IsKeyPressed(APP_QUIT_KEY))
 		{		
-			exit(0);
+			glutLeaveMainLoop();
 		}
 		gUpdateDeltaTime.Start();
 	}
@@ -177,23 +178,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, 	_In_opt_ HINSTANCE hPrevInstanc
 	glutInit(&argc, &argv);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutInitWindowPosition(100, 100);
-	int glutWind = glutCreateWindow(APP_WINDOW_TITLE);
+	int glutWind = glutCreateWindow(APP_WINDOW_TITLE);	
 	HDC dc = wglGetCurrentDC();
 	MAIN_WINDOW_HANDLE = WindowFromDC(dc);
 	glutIdleFunc(Idle);
-	glutDisplayFunc(Display);       // Register callback handler for window re-paint event
+	glutDisplayFunc(Display);       // Register callback handler for window re-paint event	
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	InitGL();                       // Our own OpenGL initialization
 
+
+
 	// Init sounds system.
 	CSimpleSound::GetInstance().Initialize(MAIN_WINDOW_HANDLE);
-
-#ifdef _DEBUG
-	// Init debug console
-	AllocConsole();
-	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
-#endif
 	
 	// Call user defined init.
 	Init();

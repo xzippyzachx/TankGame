@@ -18,7 +18,7 @@
 #include "../stb_image/stb_image.h"
 #include "../glut/include/GL/freeglut_ext.h"
 
-std::map<const char *, CSimpleSprite::sTextureDef > CSimpleSprite::m_textures;
+std::map<std::string, CSimpleSprite::sTextureDef > CSimpleSprite::m_textures;
 
 //-----------------------------------------------------------------------------
 CSimpleSprite::CSimpleSprite(const char *fileName, unsigned int nColumns, unsigned int nRows)
@@ -50,15 +50,7 @@ void CSimpleSprite::Update(float dt)
         //Looping around if reached the end of animation
         if (m_animTime > duration)
         {
-            //If we've gone farther than twice the duration, we have to remove as many full durations as possible
-            if (m_animTime >= 2 * duration)
-            {
-                m_animTime = m_animTime - duration * floorf(m_animTime / duration);
-            }
-            else //Otherwise, we can just do a simple loop around
-            {
-                m_animTime = m_animTime - duration;
-            }
+            m_animTime = fmodf(m_animTime, duration);
         }
         int frame = (int)( m_animTime / anim.m_speed );
         SetFrame(anim.m_frames[frame]);        
@@ -136,6 +128,17 @@ void CSimpleSprite::SetFrame(unsigned int f)
 
 void CSimpleSprite::SetAnimation(int id)
 {
+    SetAnimation(id, false);
+}
+
+void CSimpleSprite::SetAnimation(int id, bool playFromBeginning)
+{
+    //When starting a new animation, we may want to start from the beginning, ie reset time
+    if (playFromBeginning)
+    {
+        m_animTime = 0.0f;
+    }
+
     for (int i = 0; i < m_animations.size(); i++)
     {
         if (m_animations[i].m_id == id)
@@ -144,10 +147,10 @@ void CSimpleSprite::SetAnimation(int id)
             return;
         }
     }
-	m_currentAnim = -1;
+    m_currentAnim = -1;
 }
 
-bool CSimpleSprite::LoadTexture(const char * filename)
+bool CSimpleSprite::LoadTexture(const std::string& filename)
 {
     if (m_textures.find(filename) != m_textures.end())
     {        
@@ -161,7 +164,7 @@ bool CSimpleSprite::LoadTexture(const char * filename)
     //unsigned char *imageData = loadBMPRaw(filename, m_texWidth, m_texHeight, true);
 
     int channels;
-    unsigned char* imageData = stbi_load(filename, &m_texWidth, &m_texHeight, &channels, 4);
+    unsigned char* imageData = stbi_load(filename.c_str(), &m_texWidth, &m_texHeight, &channels, 4);
 
     GLuint texture = 0;
 	if (imageData)
@@ -169,11 +172,11 @@ bool CSimpleSprite::LoadTexture(const char * filename)
 		glGenTextures(1, &texture);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP); // Disable wrapping
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP); // Disable wrapping
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		gluBuild2DMipmaps(GL_TEXTURE_2D, 4, m_texWidth, m_texHeight, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
         stbi_image_free(imageData);
 		sTextureDef textureDef = { (unsigned int) m_texWidth, (unsigned int) m_texHeight, texture };
