@@ -12,9 +12,13 @@ public:
 
 	void SetSprite(char* fileName) override;
 protected:
-	float speed = 50.0f;
+	float trackSpeed = 50.0f;
+	float turretSpeed = 30.0f;
+
+	float turretAngle = 150.0f;
 
 	void ProcessInput(float dt);
 	void Move(float dt, float inputX);
+	void Angle(float dt, float inputX);
 	void Fire();
 };

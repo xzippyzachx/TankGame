@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------
 
 #include "EntityManager.h"
+#include "UIManager.h"
 
 #include "Tank.h"
 #include "Projectile.h"
@@ -30,7 +31,6 @@ void Init()
 	glClearColor(0.133f, 0.133f, 0.133f, 1.0f);
 
 	Tank* newTank = EntityManager::getInstance().CreateTank();
-	newTank->SetSprite(".\\Resources\\Sprites\\tanks_tankGreen1.png");
 	newTank->SetPosition(Vector2(APP_VIRTUAL_WIDTH / 2.0f, 100.0f));
 }
 
@@ -46,7 +46,7 @@ void Update(float dt)
 	{
 		glutFullScreenToggle();
 	}
-	
+
 	EntityManager::getInstance().Update(dt);
 
 	//------------------------------------------------------------------------
@@ -66,11 +66,7 @@ void Update(float dt)
 void Render()
 {
 	EntityManager::getInstance().Draw();
-
-	//------------------------------------------------------------------------
-	// Example Text.
-	//------------------------------------------------------------------------
-	App::Print(10, APP_VIRTUAL_HEIGHT - 20, "Player");
+	UIManager::getInstance().Draw();
 
 	//------------------------------------------------------------------------
 	// Example Line Drawing.
@@ -101,4 +97,5 @@ void Render()
 void Shutdown()
 {
 	EntityManager::getInstance().Destroy();
+	UIManager::getInstance().Destroy();
 }
