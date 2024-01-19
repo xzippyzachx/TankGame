@@ -15,5 +15,6 @@ protected:
 	float speed = 50.0f;
 
 	void ProcessInput(float dt);
+	void Move(float dt, float inputX);
 	void Fire();
 };

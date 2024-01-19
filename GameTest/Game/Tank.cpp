@@ -6,10 +6,8 @@
 #include "Tank.h"
 #include "Projectile.h"
 
-
 Tank::Tank() : Entity()
 {
-	
 }
 
 void Tank::Update(float dt)
@@ -17,26 +15,32 @@ void Tank::Update(float dt)
 	Entity::Update(dt);
 
 	ProcessInput(dt);
-	
+}
+
+void Tank::SetSprite(char* fileName)
+{
+	Entity::SetSprite(fileName);
+}
+
+void Tank::ProcessInput(float dt)
+{
+	Move(dt, App::GetController().GetLeftThumbStickX());
+
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
 	{
 		Fire();
 	}
 }
 
-void Tank::ProcessInput(float dt)
+void Tank::Move(float dt, float inputX)
 {
-	float inputX = App::GetController().GetLeftThumbStickX();
-
-	if (inputX > 0.25f || inputX < -0.25f)
+	// Dead zone
+	if (!(inputX > 0.25f) && !(inputX < -0.25f))
 	{
-		position.x += inputX * speed * dt;
+		return;
 	}
-}
 
-void Tank::SetSprite(char* fileName)
-{
-	Entity::SetSprite(fileName);
+	position.x += inputX * speed * dt;
 }
 
 void Tank::Fire()
