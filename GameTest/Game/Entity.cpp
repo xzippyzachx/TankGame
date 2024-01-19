@@ -26,8 +26,8 @@ void Entity::Destroy()
 
 void Entity::SetSprite(char* fileName)
 {
-	sprite = App::CreateSprite(fileName, 2, 1);
-	sprite->SetScale(5.0f);
+	sprite = App::CreateSprite(fileName, 1, 1);
+	sprite->SetScale(0.5f);
 }
 
 void Entity::SetPosition(Vector2 pos)

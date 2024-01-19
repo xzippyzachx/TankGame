@@ -9,7 +9,10 @@
 #include "..\app\app.h"
 //------------------------------------------------------------------------
 
+#include "EntityManager.h"
+
 #include "Player.h"
+#include "Projectile.h"
 
 Player* player;
 
@@ -30,23 +33,35 @@ void Init()
 
 	
 	player = new Player();
-	player->SetSprite(".\\Resources\\Sprites\\human.png");
+	player->SetSprite(".\\Resources\\Sprites\\tanks_tankGreen1.png");
 	player->SetPosition(Vector2(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f));
-	
+
 }
 
 //------------------------------------------------------------------------
 // Update your simulation here. deltaTime is the elapsed time since the last update in ms.
 // This will be called at no greater frequency than the value of APP_MAX_FRAME_RATE
 //------------------------------------------------------------------------
-void Update(float deltaTime)
+void Update(float dt)
 {
-	player->Update(deltaTime);
+	dt = dt / 1000.0f;
 
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_LEFT_SHOULDER, true))
 	{
 		glutFullScreenToggle();
 	}
+
+	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
+	{
+		Projectile* newProjectile = EntityManager::getInstance().CreateProjectile();
+		newProjectile->SetSprite(".\\Resources\\Sprites\\tank_bullet1.png");
+		newProjectile->SetPosition(Vector2(100, 100));
+		newProjectile->SetVelocity(Vector2(50.0f, 50.0f));
+	}
+
+	player->Update(dt);
+
+	EntityManager::getInstance().Update(dt);
 
 	//------------------------------------------------------------------------
 	// Sample Sound.
@@ -65,6 +80,8 @@ void Update(float deltaTime)
 void Render()
 {
 	player->Draw();
+
+	EntityManager::getInstance().Draw();
 
 	//------------------------------------------------------------------------
 	// Example Text.
@@ -100,4 +117,5 @@ void Render()
 void Shutdown()
 {	
 	player->Destroy();
+	EntityManager::getInstance().Destroy();
 }

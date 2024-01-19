@@ -5,7 +5,7 @@
 
 Player::Player() : Entity()
 {
-	float animSpeed = 0.025f;
+	
 }
 
 void Player::Update(float deltaTime)
@@ -21,19 +21,15 @@ void Player::Update(float deltaTime)
 
 		position.x += inputX * speed * deltaTime;
 		position.y += inputY * speed * deltaTime;
-
-		std::cout << "Dir: (" << inputX << "," << inputY << ")" << "\n";
 	}
 	else
 	{
 		sprite->SetFrame(0);
 	}
-	
 }
 
 void Player::SetSprite(char* fileName)
 {
 	Entity::SetSprite(fileName);
-	sprite->CreateAnimation(MOVE, speed, { 0,1 });
 }
 
