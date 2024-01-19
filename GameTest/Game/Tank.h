@@ -4,20 +4,16 @@
 
 #include "Entity.h"
 
-enum STATE
-{
-	IDLE,
-	MOVE
-};
-
-class Player : public Entity
+class Tank : public Entity
 {
 public:
-	Player();
+	Tank();
 	void Update(float dt) override;
 
 	void SetSprite(char* fileName) override;
 protected:
-	float speed = 0.25f;
+	float speed = 50.0f;
 
+	void ProcessInput(float dt);
+	void Fire();
 };

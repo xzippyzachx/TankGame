@@ -11,10 +11,8 @@
 
 #include "EntityManager.h"
 
-#include "Player.h"
+#include "Tank.h"
 #include "Projectile.h"
-
-Player* player;
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
@@ -31,11 +29,9 @@ void Init()
 	// Backgound color
 	glClearColor(0.133f, 0.133f, 0.133f, 1.0f);
 
-	
-	player = new Player();
-	player->SetSprite(".\\Resources\\Sprites\\tanks_tankGreen1.png");
-	player->SetPosition(Vector2(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f));
-
+	Tank* newTank = EntityManager::getInstance().CreateTank();
+	newTank->SetSprite(".\\Resources\\Sprites\\tanks_tankGreen1.png");
+	newTank->SetPosition(Vector2(APP_VIRTUAL_WIDTH / 2.0f, 100.0f));
 }
 
 //------------------------------------------------------------------------
@@ -50,17 +46,7 @@ void Update(float dt)
 	{
 		glutFullScreenToggle();
 	}
-
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
-	{
-		Projectile* newProjectile = EntityManager::getInstance().CreateProjectile();
-		newProjectile->SetSprite(".\\Resources\\Sprites\\tank_bullet1.png");
-		newProjectile->SetPosition(Vector2(100, 100));
-		newProjectile->SetVelocity(Vector2(50.0f, 50.0f));
-	}
-
-	player->Update(dt);
-
+	
 	EntityManager::getInstance().Update(dt);
 
 	//------------------------------------------------------------------------
@@ -79,8 +65,6 @@ void Update(float dt)
 //------------------------------------------------------------------------
 void Render()
 {
-	player->Draw();
-
 	EntityManager::getInstance().Draw();
 
 	//------------------------------------------------------------------------
@@ -115,7 +99,6 @@ void Render()
 // Just before the app exits.
 //------------------------------------------------------------------------
 void Shutdown()
-{	
-	player->Destroy();
+{
 	EntityManager::getInstance().Destroy();
 }
