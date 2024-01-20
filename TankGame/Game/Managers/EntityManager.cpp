@@ -69,6 +69,11 @@ Particle* EntityManager::CreateParticle()
 	return newParticle;
 }
 
+Tank* EntityManager::GetTank(int id)
+{
+    return tanks[id];
+}
+
 void EntityManager::DestroyTank(Tank* tank)
 {
 	for (int i = 0; i < tanks.size(); i++)
@@ -90,7 +95,6 @@ void EntityManager::DestroyProjectile(Projectile* projectile)
 		{
 			projectiles.erase(projectiles.begin() + i);
 			projectile->Destroy();
-			std::cout << "here2 " << projectiles.size() << "\n";
 			return;
 		}
 	}

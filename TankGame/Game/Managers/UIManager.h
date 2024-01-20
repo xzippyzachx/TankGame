@@ -19,8 +19,9 @@ public:
 	void Draw();
 	void Destroy();
 
-    void SetTurretAngle(int tankId, float angle);
-    void SetTurretPower(int tankId, float power);
+	void SetCurrentPlayer(int id);
+    void SetTurretAngle(float angle);
+    void SetTurretPower(float power);
 private:
 	// Singlton pattern
 	////////
@@ -28,8 +29,9 @@ private:
 	UIManager(UIManager const&);
     void operator=(UIManager const&);
 	////////
-
-    std::string tank1Angle;
-    std::string tank1Power;
+	
+	std::string currentPlayer;
+    std::string tankAngle;
+    std::string tankPower;
 };
 

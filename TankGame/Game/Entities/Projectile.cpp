@@ -5,6 +5,7 @@
 
 #include "..\Managers\EntityManager.h"
 #include "..\Managers\TerrainManager.h"
+#include "..\Managers\TurnManager.h"
 
 Projectile::Projectile() : Entity()
 {
@@ -54,6 +55,8 @@ void Projectile::CheckHit()
 		part->SetPosition(position);
 
 		SetVelocity(Vector2(0.0f, 0.0f));
+
+		TurnManager::getInstance().NextTurn();
 
 		EntityManager::getInstance().DestroyProjectile(this);
 	}

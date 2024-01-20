@@ -197,6 +197,7 @@
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Game\Managers\UIManager.h" />
     <ClInclude Include="Game\Managers\TerrainManager.h" />
+    <ClInclude Include="Game\Managers\TurnManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\app.cpp" />
@@ -220,6 +221,7 @@
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Game\Managers\UIManager.cpp" />
     <ClCompile Include="Game\Managers\TerrainManager.cpp" />
+    <ClCompile Include="Game\Managers\TurnManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

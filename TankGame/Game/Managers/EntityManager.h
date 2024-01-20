@@ -28,6 +28,8 @@ public:
 	Projectile* CreateProjectile();
 	Particle* CreateParticle();
 
+	Tank* GetTank(int id);
+
 	void DestroyTank(Tank* tank);
 	void DestroyProjectile(Projectile* projectile);
 	void DestroyParticle(Particle* particle);

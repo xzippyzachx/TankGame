@@ -11,23 +11,28 @@ void UIManager::operator=(UIManager const&)
 
 void UIManager::Draw()
 {
-    App::Print(10, APP_VIRTUAL_HEIGHT - 20, "Player 1");
-    App::Print(10, APP_VIRTUAL_HEIGHT - 40, ("Angle: " + tank1Angle).c_str());
-    App::Print(10, APP_VIRTUAL_HEIGHT - 60, ("Power: " + tank1Power).c_str());
+    App::Print(10, APP_VIRTUAL_HEIGHT - 20, ("Player " + currentPlayer).c_str());
+    App::Print(10, APP_VIRTUAL_HEIGHT - 40, ("Angle: " + tankAngle).c_str());
+    App::Print(10, APP_VIRTUAL_HEIGHT - 60, ("Power: " + tankPower).c_str());
 }
 
 void UIManager::Destroy()
 {
 }
 
-void UIManager::SetTurretAngle(int tankId, float angle)
+void UIManager::SetCurrentPlayer(int id)
 {
-    tank1Angle = std::to_string(angle);
-    tank1Angle = tank1Angle.substr(0, tank1Angle.find("."));
+    currentPlayer = std::to_string(id + 1);
 }
 
-void UIManager::SetTurretPower(int tankId, float power)
+void UIManager::SetTurretAngle(float angle)
 {
-    tank1Power = std::to_string(power);
-    tank1Power = tank1Power.substr(0, tank1Power.find("."));
+    tankAngle = std::to_string(angle);
+    tankAngle = tankAngle.substr(0, tankAngle.find("."));
+}
+
+void UIManager::SetTurretPower(float power)
+{
+    tankPower = std::to_string(power);
+    tankPower = tankPower.substr(0, tankPower.find("."));
 }

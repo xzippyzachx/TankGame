@@ -8,13 +8,23 @@ public:
 	void Update(float dt) override;
 
 	void SetSprite(char* fileName, Vector2 offset) override;
+
+	int NextId() { nextId++; return nextId - 1; }
+	int GetId() { return id; }
+
+	void NewTurn();
 protected:
+	static int nextId;
+	int id;
+
 	float trackSpeed = 50.0f;
 	float turretAngleSpeed = 30.0f;
 	float turretPowerSpeed = 20.0f;
 
 	float turretAngle = 150.0f;
 	float turretPower = 50.0f;
+
+	int shells = 1;
 
 	void ProcessInput(float dt);
 	void Move(float dt, float inputX);

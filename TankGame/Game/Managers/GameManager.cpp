@@ -12,6 +12,7 @@
 #include "EntityManager.h"
 #include "UIManager.h"
 #include "TerrainManager.h"
+#include "TurnManager.h"
 
 #include "..\Entities\Tank.h"
 #include "..\Entities\Projectile.h"
@@ -31,8 +32,15 @@ void Init()
 	// Backgound color
 	glClearColor(0.518f, 0.8f, 1.0f, 1.0f);
 
-	Tank* newTank = EntityManager::getInstance().CreateTank();
-	newTank->SetPosition(Vector2(APP_VIRTUAL_WIDTH / 2.0f, 100.0f));
+	float space = (APP_VIRTUAL_WIDTH - 200.0f) / (PLAYER_COUNT - 1);
+	float x = 100.0f;
+	for (int i = 0; i < PLAYER_COUNT; i++)
+	{
+		Tank* newTank = EntityManager::getInstance().CreateTank();
+		newTank->SetPosition(Vector2(x, 100.0f));
+
+		x += space;
+	}
 }
 
 //------------------------------------------------------------------------
@@ -71,4 +79,5 @@ void Shutdown()
 	TerrainManager::getInstance().Destroy();
 	EntityManager::getInstance().Destroy();
 	UIManager::getInstance().Destroy();
+	TurnManager::getInstance().Destroy();
 }
