@@ -9,8 +9,12 @@
 
 Tank::Tank() : Entity()
 {
-	SetSprite(".\\Resources\\Sprites\\tanks_tankGreen_body1.png");
+	SetSprite(".\\Resources\\Sprites\\tanks_turret1.png", Vector2(-2.0f, 10.0f));
+	SetSprite(".\\Resources\\Sprites\\tanks_tankTracks1.png", Vector2(0.0f, -10.0f));
 
+	SetSprite(".\\Resources\\Sprites\\tanks_tankGreen_body1.png", Vector2(0.0f,0.0f));
+
+	GetSprite(0)->SetAngle((-turretAngle * (PI / 180.0f)) + PI);
 	UIManager::getInstance().SetTurretAngle(0, turretAngle);
 }
 
@@ -21,9 +25,9 @@ void Tank::Update(float dt)
 	ProcessInput(dt);
 }
 
-void Tank::SetSprite(char* fileName)
+void Tank::SetSprite(char* fileName, Vector2 offset)
 {
-	Entity::SetSprite(fileName);
+	Entity::SetSprite(fileName, offset);
 }
 
 void Tank::ProcessInput(float dt)
@@ -69,14 +73,14 @@ void Tank::Angle(float dt, float inputY)
 		turretAngle = 180.0f;
 	}
 
+	GetSprite(0)->SetAngle((-turretAngle * (PI / 180.0f)) + PI);
 	UIManager::getInstance().SetTurretAngle(0, turretAngle);
 }
 
 void Tank::Fire()
 {
 	Projectile* newProjectile = EntityManager::getInstance().CreateProjectile();
-	newProjectile->SetSprite(".\\Resources\\Sprites\\tank_bullet1.png");
-	newProjectile->SetPosition(Vector2(position.x, position.y + 10.0f));
+	newProjectile->SetPosition(Vector2(position.x - 2.0f, position.y + 10.0f));
 
 	// std::cout << "Radians: " << turretAngle * (PI / 180.0f) <<"\n";
 	Vector2 vel = Vector2(-cos(turretAngle * (PI / 180.0f)), sin(turretAngle * (PI / 180.0f))) * 50.0f;

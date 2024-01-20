@@ -10,7 +10,7 @@ public:
 	Tank();
 	void Update(float dt) override;
 
-	void SetSprite(char* fileName) override;
+	void SetSprite(char* fileName, Vector2 offset) override;
 protected:
 	float trackSpeed = 50.0f;
 	float turretSpeed = 30.0f;

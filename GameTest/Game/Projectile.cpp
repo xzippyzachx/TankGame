@@ -8,7 +8,7 @@
 
 Projectile::Projectile() : Entity()
 {
-	
+	SetSprite(".\\Resources\\Sprites\\tank_bullet1.png", Vector2(0.0f, 0.0f));
 }
 
 void Projectile::Update(float dt)
@@ -22,6 +22,11 @@ void Projectile::Update(float dt)
 void Projectile::Destroy()
 {
 	Entity::Destroy();
+}
+
+void Projectile::SetSprite(char* fileName, Vector2 offset)
+{
+	Entity::SetSprite(fileName, offset);
 }
 
 void Projectile::SimulatePhysics(float dt)
@@ -55,13 +60,10 @@ void Projectile::UpdateAngle()
 	}
 
 	float angle = atan2(velocity.y, velocity.x); // Radians
-	sprite->SetAngle(angle);
+	GetSprite(0)->SetAngle(angle);
 }
 
-void Projectile::SetSprite(char* fileName)
-{
-	Entity::SetSprite(fileName);
-}
+
 
 void Projectile::SetVelocity(Vector2 vel)
 {

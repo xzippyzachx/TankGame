@@ -7,7 +7,7 @@ public:
 	void Update(float dt) override;
     void Destroy() override;
 
-    void SetSprite(char* fileName) override;
+    void SetSprite(char* fileName, Vector2 offset) override;
 
     void SetVelocity(Vector2 vel);
 protected:

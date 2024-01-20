@@ -8,26 +8,43 @@ Entity::Entity()
 	
 }
 
-void Entity::Update(float deltaTime)
+void Entity::Update(float dt)
 {
-	sprite->Update(deltaTime);
+	for (const auto& sprite : sprites)
+	{
+		sprite->Update(dt);
+	}
 }
 
 void Entity::Draw()
 {
-	sprite->SetPosition(position.x, position.y);
-	sprite->Draw();
+	int i = 0;
+	for (const auto& sprite : sprites)
+	{
+		Vector2 offset = spriteOffsets[i];
+		sprite->SetPosition(position.x + offset.x, position.y + offset.y);
+		sprite->Draw();
+		i++;
+	}
 }
 
 void Entity::Destroy()
 {
-	delete sprite;
+	sprites.clear();
+	spriteOffsets.clear();
 }
 
-void Entity::SetSprite(char* fileName)
+void Entity::SetSprite(char* fileName, Vector2 offset)
 {
-	sprite = App::CreateSprite(fileName, 1, 1);
-	sprite->SetScale(0.25f);
+	CSimpleSprite* newSprite = App::CreateSprite(fileName, 1, 1);
+	newSprite->SetScale(0.25f);
+	sprites.push_back(newSprite);
+	spriteOffsets.push_back(offset);
+}
+
+CSimpleSprite* Entity::GetSprite(int spriteId)
+{
+	return sprites[spriteId];
 }
 
 void Entity::SetPosition(Vector2 pos)

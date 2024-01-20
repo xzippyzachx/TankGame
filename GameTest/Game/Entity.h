@@ -13,10 +13,13 @@ public:
 	void Draw();
 	virtual void Destroy();
 
-	virtual void SetSprite(char* fileName);
+	virtual void SetSprite(char* fileName, Vector2 offset);
+	virtual CSimpleSprite* GetSprite(int spriteId);
+
 	void SetPosition(Vector2 pos);
 protected:
-	CSimpleSprite* sprite;
+	std::vector<CSimpleSprite*> sprites;
+	std::vector<Vector2> spriteOffsets;
 	Vector2 position;
 
 };
