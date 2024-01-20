@@ -48,10 +48,12 @@ void Tank::Move(float dt, float inputX)
 	// Dead zone
 	if (!(inputX > 0.25f) && !(inputX < -0.25f))
 	{
+		EngineSound(false);
 		return;
 	}
 
 	position.x += inputX * trackSpeed * dt;
+	EngineSound(true);
 }
 
 void Tank::Angle(float dt, float inputX)
@@ -114,4 +116,18 @@ void Tank::Fire()
 	newProjectile->SetVelocity(vel);
 
 	App::PlaySound(".\\Resources\\Audio\\shell_fire.wav");
+}
+
+void Tank::EngineSound(bool play)
+{
+	char* filename = ".\\Resources\\Audio\\tank_engine.wav";
+	bool isPlaying = App::IsSoundPlaying(filename);
+	if (play && !isPlaying)
+	{
+		App::PlaySound(filename, true);
+	}
+	else if (!play && isPlaying)
+	{
+		App::StopSound(filename);
+	}
 }

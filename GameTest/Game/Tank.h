@@ -24,4 +24,5 @@ protected:
 	void Angle(float dt, float inputX);
 	void Power(float dt, float inputY);
 	void Fire();
+	void EngineSound(bool play);
 };
