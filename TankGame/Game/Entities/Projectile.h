@@ -14,6 +14,7 @@ protected:
     Vector2 velocity;
 
     void SimulatePhysics(float dt);
+    void CheckHit();
     void UpdateAngle();
 };
 

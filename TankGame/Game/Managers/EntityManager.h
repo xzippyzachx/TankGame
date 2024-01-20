@@ -6,6 +6,7 @@
 
 #include "..\Entities\Tank.h"
 #include "..\Entities\Projectile.h"
+#include "..\Entities\Particle.h"
 
 class EntityManager
 {        
@@ -25,9 +26,11 @@ public:
 
 	Tank* CreateTank();
 	Projectile* CreateProjectile();
+	Particle* CreateParticle();
 
 	void DestroyTank(Tank* tank);
 	void DestroyProjectile(Projectile* projectile);
+	void DestroyParticle(Particle* particle);
 private:
 	// Singlton pattern
 	////////
@@ -38,5 +41,6 @@ private:
 
 	std::vector<Tank*> tanks;
 	std::vector<Projectile*> projectiles;
+	std::vector<Particle*> particles;
 };
 

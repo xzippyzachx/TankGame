@@ -19,17 +19,25 @@ void EntityManager::Update(float dt)
 	{
 		projectile->Update(dt);
 	}
+	for (const auto& particle : particles)
+	{
+		particle->Update(dt);
+	}
 }
 
 void EntityManager::Draw()
 {
+	for (const auto& projectile : projectiles)
+	{
+		projectile->Draw();
+	}
 	for (const auto& tank : tanks)
 	{
 		tank->Draw();
 	}
-	for (const auto& projectile : projectiles)
+	for (const auto& particle : particles)
 	{
-		projectile->Draw();
+		particle->Draw();
 	}
 }
 
@@ -37,6 +45,7 @@ void EntityManager::Destroy()
 {
 	tanks.clear();
 	projectiles.clear();
+	particles.clear();
 }
 
 Tank* EntityManager::CreateTank()
@@ -51,6 +60,13 @@ Projectile* EntityManager::CreateProjectile()
 	Projectile* newProjectile = new Projectile();
 	projectiles.push_back(newProjectile);
 	return newProjectile;
+}
+
+Particle* EntityManager::CreateParticle()
+{
+    Particle* newParticle = new Particle();
+	particles.push_back(newParticle);
+	return newParticle;
 }
 
 void EntityManager::DestroyTank(Tank* tank)
@@ -74,6 +90,20 @@ void EntityManager::DestroyProjectile(Projectile* projectile)
 		{
 			projectiles.erase(projectiles.begin() + i);
 			projectile->Destroy();
+			std::cout << "here2 " << projectiles.size() << "\n";
+			return;
+		}
+	}
+}
+
+void EntityManager::DestroyParticle(Particle *particle)
+{
+	for (int i = 0; i < particles.size(); i++)
+	{
+		if (particles[i] == particle)
+		{
+			particles.erase(particles.begin() + i);
+			particle->Destroy();
 			return;
 		}
 	}

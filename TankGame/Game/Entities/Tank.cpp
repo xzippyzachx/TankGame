@@ -18,8 +18,6 @@ Tank::Tank() : Entity()
 	GetSprite(0)->SetAngle((-turretAngle * (PI / 180.0f)) + PI);
 	UIManager::getInstance().SetTurretAngle(0, turretAngle);
 	UIManager::getInstance().SetTurretPower(0, turretPower);
-
-	
 }
 
 void Tank::Update(float dt)

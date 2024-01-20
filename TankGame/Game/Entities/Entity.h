@@ -21,5 +21,4 @@ protected:
 	std::vector<CSimpleSprite*> sprites;
 	std::vector<Vector2> spriteOffsets;
 	Vector2 position;
-
 };

@@ -8,7 +8,7 @@
 
 Projectile::Projectile() : Entity()
 {
-	SetSprite(".\\Resources\\Sprites\\tank_bullet1.png", Vector2(0.0f, 0.0f));
+	SetSprite(".\\Resources\\Sprites\\tank_bullet5.png", Vector2(0.0f, 0.0f));
 }
 
 void Projectile::Update(float dt)
@@ -36,18 +36,25 @@ void Projectile::SimulatePhysics(float dt)
 
 	position.x += velocity.x * dt * WORLD_SCALE;
 	position.y += velocity.y * dt * WORLD_SCALE;
-	
-	if (position.y >= TerrainManager::getInstance().GetFloor(position.x))
-	{
-		//Gravity
-		velocity.y -= 9.81f * dt * WORLD_SCALE;
-	}
-	else
-	{
-		velocity.y = 0.0f;
-		velocity.x = 0.0f;
 
+	velocity.y -= 9.81f * dt * WORLD_SCALE;
+	
+	CheckHit();
+}
+
+void Projectile::CheckHit()
+{
+	bool hitTerrain = position.y <= TerrainManager::getInstance().GetFloor(position.x);
+
+	if (hitTerrain)
+	{
 		TerrainManager::getInstance().Explode(position);
+
+		Particle* part = EntityManager::getInstance().CreateParticle();
+		part->SetPosition(position);
+
+		SetVelocity(Vector2(0.0f, 0.0f));
+
 		EntityManager::getInstance().DestroyProjectile(this);
 	}
 }
@@ -62,8 +69,6 @@ void Projectile::UpdateAngle()
 	float angle = atan2(velocity.y, velocity.x); // Radians
 	GetSprite(0)->SetAngle(angle);
 }
-
-
 
 void Projectile::SetVelocity(Vector2 vel)
 {
