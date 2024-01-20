@@ -3,6 +3,7 @@
 
 #include "EntityManager.h"
 #include "UIManager.h"
+#include "TerrainManager.h"
 
 #include "Tank.h"
 #include "Projectile.h"
@@ -53,6 +54,8 @@ void Tank::Move(float dt, float inputX)
 	}
 
 	position.x += inputX * trackSpeed * dt;
+	position.y = TerrainManager::getInstance().GetFloor(position.x) + 20.0f;
+
 	EngineSound(true);
 }
 

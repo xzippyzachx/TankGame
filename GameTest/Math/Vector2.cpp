@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Vector2.h"
+#include <cmath>
 
 Vector2::Vector2()
 {
@@ -13,7 +14,12 @@ Vector2::Vector2(float x, float y)
 	this->y = y;
 }
 
-float Vector2::GetMagnitude()
+float Vector2::Length()
 {
-	return x * x + y * y;
+	return sqrt(x * x + y * y);
+}
+
+float Vector2::Distance(Vector2 v)
+{
+	return (v - Vector2(x, y)).Length();
 }

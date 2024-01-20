@@ -193,6 +193,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Game\UIManager.h" />
+    <ClInclude Include="Game\TerrainManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\app.cpp" />
@@ -214,6 +215,7 @@
     </ClCompile>
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Game\UIManager.cpp" />
+    <ClCompile Include="Game\TerrainManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

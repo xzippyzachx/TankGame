@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Projectile.h"
 
-#define _USE_MATH_DEFINES
 #include <cmath>
 
 #include "EntityManager.h"
+#include "TerrainManager.h"
 
 Projectile::Projectile() : Entity()
 {
@@ -37,7 +37,7 @@ void Projectile::SimulatePhysics(float dt)
 	position.x += velocity.x * dt * WORLD_SCALE;
 	position.y += velocity.y * dt * WORLD_SCALE;
 	
-	if (position.y >= 100.0f)
+	if (position.y >= TerrainManager::getInstance().GetFloor(position.x))
 	{
 		//Gravity
 		velocity.y -= 9.81f * dt * WORLD_SCALE;
@@ -46,15 +46,15 @@ void Projectile::SimulatePhysics(float dt)
 	{
 		velocity.y = 0.0f;
 		velocity.x = 0.0f;
-		position.y = 100.0f;
 
+		TerrainManager::getInstance().Explode(position);
 		EntityManager::getInstance().DestroyProjectile(this);
 	}
 }
 
 void Projectile::UpdateAngle()
 {
-	if (velocity.GetMagnitude() == 0.0f)
+	if (velocity.Length() == 0.0f)
 	{
 		return;
 	}

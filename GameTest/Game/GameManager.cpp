@@ -14,6 +14,7 @@
 
 #include "Tank.h"
 #include "Projectile.h"
+#include "TerrainManager.h"
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
@@ -28,7 +29,7 @@ void Init()
 #endif
 
 	// Backgound color
-	glClearColor(0.133f, 0.133f, 0.133f, 1.0f);
+	glClearColor(0.518f, 0.8f, 1.0f, 1.0f);
 
 	Tank* newTank = EntityManager::getInstance().CreateTank();
 	newTank->SetPosition(Vector2(APP_VIRTUAL_WIDTH / 2.0f, 100.0f));
@@ -47,6 +48,7 @@ void Update(float dt)
 		glutFullScreenToggle();
 	}
 
+	TerrainManager::getInstance().Update(dt);
 	EntityManager::getInstance().Update(dt);
 }
 
@@ -56,30 +58,9 @@ void Update(float dt)
 //------------------------------------------------------------------------
 void Render()
 {
+	TerrainManager::getInstance().Draw();
 	EntityManager::getInstance().Draw();
 	UIManager::getInstance().Draw();
-
-	//------------------------------------------------------------------------
-	// Example Line Drawing.
-	//------------------------------------------------------------------------
-	/*
-	static float a = 0.0f;
-	float r = 1.0f;
-	float g = 1.0f;
-	float b = 1.0f;
-	a += 0.1f;
-	for (int i = 0; i < 20; i++)
-	{
-
-		float sx = 200 + sinf(a + i * 0.1f)*60.0f;
-		float sy = 200 + cosf(a + i * 0.1f)*60.0f;
-		float ex = 700 - sinf(a + i * 0.1f)*60.0f;
-		float ey = 700 - cosf(a + i * 0.1f)*60.0f;
-		g = (float)i / 20.0f;
-		b = (float)i / 20.0f;
-		App::DrawLine(sx, sy, ex, ey,r,g,b);
-	}
-	*/
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.
@@ -87,6 +68,7 @@ void Render()
 //------------------------------------------------------------------------
 void Shutdown()
 {
+	TerrainManager::getInstance().Destroy();
 	EntityManager::getInstance().Destroy();
 	UIManager::getInstance().Destroy();
 }
