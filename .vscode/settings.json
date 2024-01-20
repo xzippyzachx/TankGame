@@ -63,7 +63,8 @@
         "*.rh": "cpp",
         "typeindex": "cpp",
         "unordered_map": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "functional": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

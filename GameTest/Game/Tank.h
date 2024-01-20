@@ -17,7 +17,7 @@ protected:
 	float turretPowerSpeed = 20.0f;
 
 	float turretAngle = 150.0f;
-	float turretPower = 100.0f;
+	float turretPower = 50.0f;
 
 	void ProcessInput(float dt);
 	void Move(float dt, float inputX);

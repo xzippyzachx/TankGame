@@ -18,6 +18,8 @@ Tank::Tank() : Entity()
 	GetSprite(0)->SetAngle((-turretAngle * (PI / 180.0f)) + PI);
 	UIManager::getInstance().SetTurretAngle(0, turretAngle);
 	UIManager::getInstance().SetTurretPower(0, turretPower);
+
+	
 }
 
 void Tank::Update(float dt)
@@ -25,6 +27,8 @@ void Tank::Update(float dt)
 	Entity::Update(dt);
 
 	ProcessInput(dt);
+
+	position.y = TerrainManager::getInstance().GetFloor(position.x) + 20.0f;
 }
 
 void Tank::SetSprite(char* fileName, Vector2 offset)
@@ -54,7 +58,6 @@ void Tank::Move(float dt, float inputX)
 	}
 
 	position.x += inputX * trackSpeed * dt;
-	position.y = TerrainManager::getInstance().GetFloor(position.x) + 20.0f;
 
 	EngineSound(true);
 }
