@@ -2,8 +2,9 @@
 #include "..\stdafx.h"
 #include "..\app\app.h"
 
-#include <vector>
 #include "..\math\Vector2.h"
+#include "Color.h"
+#include <unordered_map>
 
 class TerrainManager
 {
@@ -32,6 +33,6 @@ private:
     void operator=(TerrainManager const&);
 	////////
 
-    std::vector<Vector2> tilePositions;
+    std::unordered_map<Vector2, Color, Vector2::HashFunction> tiles;
 };
 

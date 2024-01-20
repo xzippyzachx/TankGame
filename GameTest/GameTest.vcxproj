@@ -183,6 +183,7 @@
     <ClInclude Include="App\SimpleController.h" />
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
+    <ClInclude Include="Game\Color.h" />
     <ClInclude Include="Game\EntityManager.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\GameSettings.h" />

@@ -60,7 +60,10 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "sstream": "cpp",
-        "*.rh": "cpp"
+        "*.rh": "cpp",
+        "typeindex": "cpp",
+        "unordered_map": "cpp",
+        "xhash": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

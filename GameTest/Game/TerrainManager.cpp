@@ -13,7 +13,14 @@ TerrainManager::TerrainManager()
             {
                 continue;
             }
-            tilePositions.push_back(Vector2(x, newY));
+
+            Color color = Color(0.502f, 0.333f, 0.196f);
+            if (y == surface)
+            {
+                color = Color(0.49f, 0.749f, 0.059f);
+            }
+
+            tiles.insert({ Vector2(x, newY),  color});
         }
     }
 }
@@ -28,16 +35,17 @@ void TerrainManager::Update(float dt)
 
 void TerrainManager::Draw()
 {
-    for (const auto& tilePos : tilePositions)
+    for (auto& tile : tiles)
 	{
-        float x = tilePos.x;
-        float y = tilePos.y;
+        float x = tile.first.x;
+        float y = tile.first.y;
 
         #if APP_USE_VIRTUAL_RES
             APP_VIRTUAL_TO_NATIVE_COORDS(x, y);
         #endif
 
-        glColor3f(0.502f, 0.333f, 0.196f);
+        Color color = tile.second;
+        glColor3f(color.r, color.g, color.b);
         
         int triangleAmount = 20; // # of triangles used to draw circle
         
@@ -58,6 +66,7 @@ void TerrainManager::Draw()
 
 void TerrainManager::Destroy()
 {
+    //tiles.clear();
 }
 
 float TerrainManager::GetFloor(float x)
@@ -65,11 +74,11 @@ float TerrainManager::GetFloor(float x)
     int tileX = (int)x - ((int)x % 5);
 
     float floor = 0.0f;
-    for (const auto& tilePos : tilePositions)
+    for (auto& tilePos : tiles)
 	{
-        if (tilePos.x == tileX && tilePos.y > floor)
+        if (tilePos.first.x == tileX && tilePos.first.y > floor)
         {
-            floor = tilePos.y;
+            floor = tilePos.first.y;
         }
     }
 
@@ -78,15 +87,15 @@ float TerrainManager::GetFloor(float x)
 
 void TerrainManager::Explode(Vector2 position)
 {
-    std::vector<Vector2> newTiles;
+    std::unordered_map<Vector2, Color, Vector2::HashFunction> newTiles;
 
-    for (int i = 0; i < tilePositions.size(); i++)
+    for (auto& tile : tiles)
 	{
-        if (!(position.Distance(tilePositions[i]) < 20.0f))
+        if (!(position.Distance(tile.first) < 20.0f))
         {
-            newTiles.push_back(tilePositions[i]);
+            newTiles.insert({ tile.first, tile.second });
         }
     }
-
-    tilePositions.swap(newTiles);
+    
+    tiles.swap(newTiles);
 }
