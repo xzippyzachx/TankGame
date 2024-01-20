@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\app\app.h"
+#include "..\..\app\app.h"
 
 #include "Entity.h"
 

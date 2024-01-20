@@ -3,8 +3,8 @@
 
 #include <cmath>
 
-#include "EntityManager.h"
-#include "TerrainManager.h"
+#include "..\Managers\EntityManager.h"
+#include "..\Managers\TerrainManager.h"
 
 Projectile::Projectile() : Entity()
 {

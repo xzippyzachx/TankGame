@@ -1,9 +1,9 @@
 #pragma once
-#include "..\stdafx.h"
-#include "..\app\app.h"
+#include "..\..\stdafx.h"
+#include "..\..\app\app.h"
 
-#include "..\math\Vector2.h"
-#include "Color.h"
+#include "..\..\math\Vector2.h"
+#include "..\Color.h"
 #include <unordered_map>
 
 class TerrainManager

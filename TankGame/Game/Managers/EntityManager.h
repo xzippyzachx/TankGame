@@ -1,11 +1,11 @@
 #pragma once
-#include "..\stdafx.h"
-#include "..\app\app.h"
+#include "..\..\stdafx.h"
+#include "..\..\app\app.h"
 
 #include <vector>
 
-#include "Tank.h"
-#include "Projectile.h"
+#include "..\Entities\Tank.h"
+#include "..\Entities\Projectile.h"
 
 class EntityManager
 {        

@@ -6,15 +6,15 @@
 #include <windows.h>
 #include <math.h>
 //------------------------------------------------------------------------
-#include "..\app\app.h"
+#include "..\..\app\app.h"
 //------------------------------------------------------------------------
 
 #include "EntityManager.h"
 #include "UIManager.h"
-
-#include "Tank.h"
-#include "Projectile.h"
 #include "TerrainManager.h"
+
+#include "..\Entities\Tank.h"
+#include "..\Entities\Projectile.h"
 
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.

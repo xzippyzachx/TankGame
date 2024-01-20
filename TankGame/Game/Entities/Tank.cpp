@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include "..\app\app.h"
+#include "..\..\app\app.h"
 
-#include "EntityManager.h"
-#include "UIManager.h"
-#include "TerrainManager.h"
+#include "..\Managers\EntityManager.h"
+#include "..\Managers\UIManager.h"
+#include "..\Managers\TerrainManager.h"
 
 #include "Tank.h"
 #include "Projectile.h"

@@ -21,8 +21,9 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7A12010B-608E-4FBE-9089-494DBB9078A1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>GameTest</RootNamespace>
+    <RootNamespace>TankGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>TankGame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -110,7 +111,7 @@
       <AdditionalDependencies>dxguid.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)\GameTest\glut\bin\*.dll $(OutputPath) /Y</Command>
+      <Command>xcopy $(SolutionDir)\TankGame\glut\bin\*.dll $(OutputPath) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,7 +128,7 @@
       <AdditionalDependencies>dxguid.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\GameTest\glut\bin\x64\*.dll" "$(OutputPath)" /Y</Command>
+      <Command>xcopy "$(SolutionDir)\TankGame\glut\bin\x64\*.dll" "$(OutputPath)" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -149,7 +150,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)\GameTest\glut\bin\*.dll $(OutputPath) /Y</Command>
+      <Command>xcopy $(SolutionDir)\TankGame\glut\bin\*.dll $(OutputPath) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -170,7 +171,7 @@
       <AdditionalDependencies>dxguid.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\GameTest\glut\bin\x64\*.dll" "$(OutputPath)" /Y</Command>
+      <Command>xcopy "$(SolutionDir)\TankGame\glut\bin\x64\*.dll" "$(OutputPath)" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -184,17 +185,17 @@
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
     <ClInclude Include="Game\Color.h" />
-    <ClInclude Include="Game\EntityManager.h" />
-    <ClInclude Include="Game\Entity.h" />
+    <ClInclude Include="Game\Managers\EntityManager.h" />
+    <ClInclude Include="Game\Entities\Entity.h" />
     <ClInclude Include="Game\GameSettings.h" />
-    <ClInclude Include="Game\Tank.h" />
-    <ClInclude Include="Game\Projectile.h" />
+    <ClInclude Include="Game\Entities\Tank.h" />
+    <ClInclude Include="Game\Entities\Projectile.h" />
     <ClInclude Include="stb_image\stb_image.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Math\Vector2.h" />
-    <ClInclude Include="Game\UIManager.h" />
-    <ClInclude Include="Game\TerrainManager.h" />
+    <ClInclude Include="Game\Managers\UIManager.h" />
+    <ClInclude Include="Game\Managers\TerrainManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\app.cpp" />
@@ -202,11 +203,11 @@
     <ClCompile Include="App\SimpleController.cpp" />
     <ClCompile Include="App\SimpleSound.cpp" />
     <ClCompile Include="App\SimpleSprite.cpp" />
-    <ClCompile Include="Game\EntityManager.cpp" />
-    <ClCompile Include="Game\Entity.cpp" />
-    <ClCompile Include="Game\GameManager.cpp" />
-    <ClCompile Include="Game\Tank.cpp" />
-    <ClCompile Include="Game\Projectile.cpp" />
+    <ClCompile Include="Game\Managers\EntityManager.cpp" />
+    <ClCompile Include="Game\Entities\Entity.cpp" />
+    <ClCompile Include="Game\Managers\GameManager.cpp" />
+    <ClCompile Include="Game\Entities\Tank.cpp" />
+    <ClCompile Include="Game\Entities\Projectile.cpp" />
     <ClCompile Include="stb_image\stb_image.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -215,8 +216,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Math\Vector2.cpp" />
-    <ClCompile Include="Game\UIManager.cpp" />
-    <ClCompile Include="Game\TerrainManager.cpp" />
+    <ClCompile Include="Game\Managers\UIManager.cpp" />
+    <ClCompile Include="Game\Managers\TerrainManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,6 @@
 #pragma once
-#include "..\stdafx.h"
-#include "..\app\app.h"
+#include "..\..\stdafx.h"
+#include "..\..\app\app.h"
 
 #include <string>
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "..\stdafx.h"
-#include "..\app\app.h"
+#include "..\..\stdafx.h"
+#include "..\..\app\app.h"
 
-#include "..\math\Vector2.h"
-#include "GameSettings.h"
+#include "..\..\math\Vector2.h"
+#include "..\GameSettings.h"
 
 class Entity
 {
