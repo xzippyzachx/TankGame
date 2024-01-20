@@ -16,6 +16,7 @@ Tank::Tank() : Entity()
 
 	GetSprite(0)->SetAngle((-turretAngle * (PI / 180.0f)) + PI);
 	UIManager::getInstance().SetTurretAngle(0, turretAngle);
+	UIManager::getInstance().SetTurretPower(0, turretPower);
 }
 
 void Tank::Update(float dt)
@@ -33,7 +34,8 @@ void Tank::SetSprite(char* fileName, Vector2 offset)
 void Tank::ProcessInput(float dt)
 {
 	Move(dt, App::GetController().GetLeftThumbStickX());
-	Angle(dt, App::GetController().GetLeftThumbStickY());
+	Angle(dt, App::GetController().GetRightThumbStickX());
+	Power(dt, App::GetController().GetRightThumbStickY());
 
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
 	{
@@ -52,17 +54,17 @@ void Tank::Move(float dt, float inputX)
 	position.x += inputX * trackSpeed * dt;
 }
 
-void Tank::Angle(float dt, float inputY)
+void Tank::Angle(float dt, float inputX)
 {
 	// Dead zone
-	if (!(inputY > 0.25f) && !(inputY < -0.25f))
+	if (!(inputX > 0.25f) && !(inputX < -0.25f))
 	{
 		return;
 	}
 
 	if (turretAngle >= 0.0f && turretAngle <= 180.0f)
 	{
-		turretAngle += -inputY * turretSpeed * dt;
+		turretAngle += inputX * turretAngleSpeed * dt;
 	}
 	else if (turretAngle < 0.0f)
 	{
@@ -77,13 +79,39 @@ void Tank::Angle(float dt, float inputY)
 	UIManager::getInstance().SetTurretAngle(0, turretAngle);
 }
 
+void Tank::Power(float dt, float inputY)
+{
+	// Dead zone
+	if (!(inputY > 0.25f) && !(inputY < -0.25f))
+	{
+		return;
+	}
+
+	if (turretPower >= 0.0f && turretPower <= 200.0f)
+	{
+		turretPower += -inputY * turretPowerSpeed * dt;
+	}
+	else if (turretPower < 0.0f)
+	{
+		turretPower = 0.0f;
+	}
+	else
+	{
+		turretPower = 200.0f;
+	}
+
+	UIManager::getInstance().SetTurretPower(0, turretPower);
+}
+
 void Tank::Fire()
 {
 	Projectile* newProjectile = EntityManager::getInstance().CreateProjectile();
 	newProjectile->SetPosition(Vector2(position.x - 2.0f, position.y + 10.0f));
 
 	// std::cout << "Radians: " << turretAngle * (PI / 180.0f) <<"\n";
-	Vector2 vel = Vector2(-cos(turretAngle * (PI / 180.0f)), sin(turretAngle * (PI / 180.0f))) * 50.0f;
+	Vector2 vel = Vector2(-cos(turretAngle * (PI / 180.0f)), sin(turretAngle * (PI / 180.0f))) * turretPower;
 	// std::cout << "Vel: (" << vel.x << "," << vel.y <<")\n";
 	newProjectile->SetVelocity(vel);
+
+	App::PlaySound(".\\Resources\\Audio\\shell_fire.wav");
 }

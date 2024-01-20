@@ -48,15 +48,6 @@ void Update(float dt)
 	}
 
 	EntityManager::getInstance().Update(dt);
-
-	//------------------------------------------------------------------------
-	// Sample Sound.
-	//------------------------------------------------------------------------
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
-	{
-		App::PlaySound(".\\Resources\\Audio\\Test.wav");
-		glutFullScreen();
-	}
 }
 
 //------------------------------------------------------------------------

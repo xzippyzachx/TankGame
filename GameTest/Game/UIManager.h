@@ -20,6 +20,7 @@ public:
 	void Destroy();
 
     void SetTurretAngle(int tankId, float angle);
+    void SetTurretPower(int tankId, float power);
 private:
 	// Singlton pattern
 	////////
@@ -29,5 +30,6 @@ private:
 	////////
 
     std::string tank1Angle;
+    std::string tank1Power;
 };
 
