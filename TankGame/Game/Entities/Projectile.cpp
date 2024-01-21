@@ -85,7 +85,8 @@ int Projectile::CheckTankHit()
 	for (int i = 0; i < PLAYER_COUNT; i++)
 	{
 		Tank* tank = EntityManager::getInstance().GetTank(i);
-		if (position.Distance(tank->GetPosition()) < 15.0f)
+		Vector2 tankPos = tank->GetPosition();
+		if (position.Distance(Vector2(tankPos.x, tankPos.y -5.0f)) < 20.0f) // ToDo: Should really make a collider class that handles collisions
 		{
 			return tank->GetId();
 		}

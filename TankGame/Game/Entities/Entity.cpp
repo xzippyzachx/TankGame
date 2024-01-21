@@ -26,6 +26,10 @@ void Entity::Draw()
 		sprite->Draw();
 		i++;
 	}
+	
+	// Collider debug draw
+	App::DrawLine(position.x - 20.0f, position.y, position.x + 20.0f, position.y, 1,0,0);
+	App::DrawLine(position.x, position.y - 25.0f, position.x, position.y + 15.0f, 1,0,0);
 }
 
 void Entity::Destroy()
