@@ -59,11 +59,15 @@ void TurnManager::NextTurn()
         return;
     }
 
-    currentTurn++;
-    if (currentTurn == PLAYER_COUNT)
+    do
     {
-        currentTurn = 0;
+        currentTurn++;
+        if (currentTurn == PLAYER_COUNT)
+        {
+            currentTurn = 0;
+        }
     }
+    while (EntityManager::getInstance().GetTank(currentTurn)->IsDead()); // Skip dead players
 
     UIManager::getInstance().SetCenterMessage("Player " + std::to_string(currentTurn + 1) + " Turn");
     
