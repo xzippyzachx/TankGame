@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "TerrainManager.h"
 
+#include "..\GameSettings.h"
+
 TerrainManager::TerrainManager()
 {
 }
@@ -67,7 +69,8 @@ void TerrainManager::Generate()
     height = (int)(surface / tileSize);
     width = APP_VIRTUAL_WIDTH / (int)tileSize;
 
-
+    amplitude = FRAND_RANGE(TERRAIN_AMPLITUDE - 5.0f, TERRAIN_AMPLITUDE + 5.0f);
+    period = FRAND_RANGE(TERRAIN_PERIOD - 20.0f, TERRAIN_PERIOD + 20.0f);
 
     for (int c = 0; c <= width; c++)
     {

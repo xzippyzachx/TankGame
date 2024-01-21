@@ -6,6 +6,8 @@
 #include "..\Color.h"
 #include <unordered_map>
 
+#include "..\GameSettings.h"
+
 class TerrainManager
 {
 public:
@@ -45,9 +47,9 @@ private:
 	void DestroyTree(Vector2 pos);
 
     float tileSize = 5.0f;
-    float amplitude = 20.0f;
-    float period = 100.0f;
-    float surface = 100.0f;
+	float surface = TERRAIN_SURFACE;
+    float amplitude = TERRAIN_AMPLITUDE;
+    float period = TERRAIN_PERIOD;
 
     std::unordered_map<Vector2, Color, Vector2::HashFunction> tiles;
 	std::unordered_map<Vector2, CSimpleSprite*, Vector2::HashFunction> trees;
