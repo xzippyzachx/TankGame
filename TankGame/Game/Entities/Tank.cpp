@@ -137,6 +137,7 @@ void Tank::Angle(float dt, float inputX)
 	// Dead zone
 	if (!(inputX > 0.25f) && !(inputX < -0.25f))
 	{
+		TurretSound(false);
 		return;
 	}
 
@@ -155,6 +156,8 @@ void Tank::Angle(float dt, float inputX)
 
 	GetSprite(0)->SetAngle((-turretAngle * (PI / 180.0f)) + PI);
 	UIManager::getInstance().SetTurretAngle(turretAngle);
+
+	TurretSound(true);
 }
 
 void Tank::Power(float dt, float inputY)
@@ -200,20 +203,6 @@ void Tank::Fire()
 	App::PlaySound(".\\Resources\\Audio\\shell_fire.wav");
 }
 
-void Tank::EngineSound(bool play)
-{
-	char* filename = ".\\Resources\\Audio\\tank_engine.wav";
-	bool isPlaying = App::IsSoundPlaying(filename);
-	if (play && !isPlaying)
-	{
-		App::PlaySound(filename, true);
-	}
-	else if (!play && isPlaying)
-	{
-		App::StopSound(filename);
-	}
-}
-
 void Tank::Die()
 {
 	if (dead)
@@ -236,5 +225,33 @@ void Tank::Die()
 	if (TurnManager::getInstance().GetCurrentTurn() == id)
 	{
 		TurnManager::getInstance().NextTurn();
+	}
+}
+
+void Tank::EngineSound(bool play)
+{
+	char* filename = ".\\Resources\\Audio\\tank_engine.wav";
+	bool isPlaying = App::IsSoundPlaying(filename);
+	if (play && !isPlaying)
+	{
+		App::PlaySound(filename, true);
+	}
+	else if (!play && isPlaying)
+	{
+		App::StopSound(filename);
+	}
+}
+
+void Tank::TurretSound(bool play)
+{
+	char* filename = ".\\Resources\\Audio\\tank_turret.wav";
+	bool isPlaying = App::IsSoundPlaying(filename);
+	if (play && !isPlaying)
+	{
+		App::PlaySound(filename, true);
+	}
+	else if (!play && isPlaying)
+	{
+		App::StopSound(filename);
 	}
 }
