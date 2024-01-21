@@ -20,6 +20,7 @@ public:
 	void Destroy();
 
 	void SetCurrentPlayer(int id);
+	void SetTankHealth(float health);
     void SetTurretAngle(float angle);
     void SetTurretPower(float power);
 private:
@@ -31,7 +32,8 @@ private:
 	////////
 	
 	std::string currentPlayer;
-    std::string tankAngle;
-    std::string tankPower;
+	std::string tankHealth;
+    std::string turretAngle;
+    std::string turretPower;
 };
 

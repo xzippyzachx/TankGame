@@ -1,6 +1,5 @@
 #pragma once
 #include "Entity.h"
-
 class Tank : public Entity
 {
 public:
@@ -13,6 +12,8 @@ public:
 	int GetId() { return id; }
 
 	void NewTurn();
+	void Damage(float amount);
+	static int GetDeadAmount() { return deadAmount; }
 protected:
 	static int nextId;
 	int id;
@@ -24,6 +25,10 @@ protected:
 	float turretAngle = 150.0f;
 	float turretPower = 50.0f;
 
+	static int deadAmount;
+	bool dead = false;
+	float health = 100.0f;
+
 	int shells = 1;
 
 	void ProcessInput(float dt);
@@ -32,4 +37,5 @@ protected:
 	void Power(float dt, float inputY);
 	void Fire();
 	void EngineSound(bool play);
+	void Die();
 };

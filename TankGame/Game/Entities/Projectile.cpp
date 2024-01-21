@@ -18,6 +18,11 @@ void Projectile::Update(float dt)
 
 	SimulatePhysics(dt);
 	UpdateAngle();
+
+	if (armTime >= 0.0f)
+	{
+		armTime -= dt;
+	}
 }
 
 void Projectile::Destroy()
@@ -46,6 +51,12 @@ void Projectile::SimulatePhysics(float dt)
 void Projectile::CheckHit()
 {
 	bool hitTerrain = position.y <= TerrainManager::getInstance().GetFloor(position.x);
+	int hitTank = CheckTankHit();
+
+	if (!hitTerrain && hitTank == -1)
+	{
+		return;
+	}
 
 	if (hitTerrain)
 	{
@@ -53,13 +64,36 @@ void Projectile::CheckHit()
 
 		Particle* part = EntityManager::getInstance().CreateParticle();
 		part->SetPosition(position);
-
-		SetVelocity(Vector2(0.0f, 0.0f));
-
-		TurnManager::getInstance().NextTurn();
-
-		EntityManager::getInstance().DestroyProjectile(this);
 	}
+	else if (hitTank != -1)
+	{
+		EntityManager::getInstance().GetTank(hitTank)->Damage(damage);
+	}
+
+	SetVelocity(Vector2(0.0f, 0.0f));
+
+	TurnManager::getInstance().NextTurn();
+
+	EntityManager::getInstance().DestroyProjectile(this);
+}
+
+int Projectile::CheckTankHit()
+{
+	if (armTime > 0.0f)
+	{
+		return -1;
+	}
+
+	for (int i = 0; i < PLAYER_COUNT; i++)
+	{
+		Tank* tank = EntityManager::getInstance().GetTank(i);
+		if (position.Distance(tank->GetPosition()) < 15.0f)
+		{
+			return tank->GetId();
+		}
+	}
+
+	return -1;
 }
 
 void Projectile::UpdateAngle()

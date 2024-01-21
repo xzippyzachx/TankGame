@@ -22,6 +22,12 @@ void TurnManager::Destroy()
 
 void TurnManager::NextTurn()
 {
+    if (Tank::GetDeadAmount() >= PLAYER_COUNT - 1)
+    {
+        std::cout << "Game Over" << "\n";
+        return;
+    }
+
     currentTurn++;
     if (currentTurn == PLAYER_COUNT)
     {

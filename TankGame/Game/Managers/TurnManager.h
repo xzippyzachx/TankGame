@@ -18,7 +18,7 @@ public:
     int GetCurrentTurn() { return currentTurn; }
     void NextTurn();
     void NewTurn();
-    
+
 private:
 	// Singlton pattern
 	////////

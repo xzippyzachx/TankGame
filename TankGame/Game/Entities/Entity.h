@@ -17,6 +17,7 @@ public:
 	virtual CSimpleSprite* GetSprite(int spriteId);
 
 	void SetPosition(Vector2 pos);
+	Vector2 GetPosition() { return position; }
 protected:
 	std::vector<CSimpleSprite*> sprites;
 	std::vector<Vector2> spriteOffsets;

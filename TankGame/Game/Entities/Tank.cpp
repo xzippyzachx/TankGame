@@ -7,10 +7,10 @@
 #include "..\Managers\TurnManager.h"
 
 #include "Tank.h"
-#include "Projectile.h"
 
 
 int Tank::nextId = 0;
+int Tank::deadAmount = 0;
 
 Tank::Tank() : Entity()
 {
@@ -59,15 +59,40 @@ void Tank::SetSprite(char* fileName, Vector2 offset)
 
 void Tank::NewTurn()
 {
+	if (dead)
+	{
+		TurnManager::getInstance().NextTurn();
+	}
+
 	shells = 1;
 
+	UIManager::getInstance().SetTankHealth(health);
 	UIManager::getInstance().SetTurretAngle(turretAngle);
 	UIManager::getInstance().SetTurretPower(turretPower);
 }
 
+void Tank::Damage(float amount)
+{
+	if (dead)
+	{
+		return;
+	}
+
+	health -= amount;
+	if (health <= 0.0f)
+	{
+		health = 0.0f;
+		Die();
+	}
+
+	UIManager::getInstance().SetTankHealth(health);
+
+	App::PlaySound(".\\Resources\\Audio\\tank_hit.wav");
+}
+
 void Tank::ProcessInput(float dt)
 {
-	if (TurnManager::getInstance().GetCurrentTurn() != id)
+	if (TurnManager::getInstance().GetCurrentTurn() != id || dead)
 	{
 		return;
 	}
@@ -79,6 +104,11 @@ void Tank::ProcessInput(float dt)
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
 	{
 		Fire();
+	}
+
+	if (App::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
+	{
+		Damage(25.0f);
 	}
 }
 
@@ -186,5 +216,27 @@ void Tank::EngineSound(bool play)
 	else if (!play && isPlaying)
 	{
 		App::StopSound(filename);
+	}
+}
+
+void Tank::Die()
+{
+	if (dead)
+	{
+		return;
+	}
+	dead = true;
+	deadAmount++;
+
+	sprites.clear();
+	spriteOffsets.clear();
+
+	SetSprite(".\\Resources\\Sprites\\tanks_destroyed_body1.png", Vector2(0.0f,-10.0f));
+
+	App::PlaySound(".\\Resources\\Audio\\tank_explosion.wav");
+
+	if (TurnManager::getInstance().GetCurrentTurn() == id)
+	{
+		TurnManager::getInstance().NextTurn();
 	}
 }
