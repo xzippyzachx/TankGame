@@ -40,6 +40,10 @@ void Particle::SetupParticle(ParticleType type)
 			particleFilename =  ".\\Resources\\Sprites\\tank_spark.png";
             frameCount = 4;
 			break;
+        case ParticleType::TANK_HIGHLIGHT:
+			particleFilename =  ".\\Resources\\Sprites\\tank_highlight.png";
+            frameCount = 5;
+			break;
         default:
 			particleFilename = ".\\Resources\\Sprites\\shell_smoke.png";
 			break;

@@ -6,6 +6,7 @@ enum ParticleType
     SHELL_SMOKE,
     TANK_EXPLODE,
     TANK_SPARK,
+    TANK_HIGHLIGHT,
 };
 
 class Particle : public Entity

@@ -71,6 +71,8 @@ void Tank::NewTurn()
 	UIManager::getInstance().SetTankFuel(fuel);
 	UIManager::getInstance().SetTurretAngle(turretAngle);
 	UIManager::getInstance().SetTurretPower(turretPower);
+
+	Highlight();
 }
 
 void Tank::Damage(float amount)
@@ -278,4 +280,11 @@ void Tank::TurretSound(bool play)
 	{
 		App::StopSound(filename);
 	}
+}
+
+void Tank::Highlight()
+{
+	Particle* part = EntityManager::getInstance().CreateParticle();
+	part->SetupParticle(ParticleType::TANK_HIGHLIGHT);
+	part->SetPosition(position);
 }

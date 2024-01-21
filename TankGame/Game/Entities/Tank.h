@@ -42,4 +42,5 @@ protected:
 	void Die();
 	void EngineSound(bool play);
 	void TurretSound(bool play);
+	void Highlight();
 };
