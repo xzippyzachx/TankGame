@@ -50,6 +50,11 @@ void Tank::Update(float dt)
 	ProcessInput(dt);
 
 	position.y = TerrainManager::getInstance().GetFloor(position.x) + 20.0f;
+
+	if (position.y <= 0.0f)
+	{
+		Die();
+	}
 }
 
 void Tank::NewTurn()
@@ -78,7 +83,6 @@ void Tank::Damage(float amount)
 	health -= amount;
 	if (health <= 0.0f)
 	{
-		health = 0.0f;
 		Die();
 	}
 
@@ -228,6 +232,7 @@ void Tank::Die()
 	}
 	dead = true;
 	deadAmount++;
+	health = 0.0f;
 
 	Particle* part = EntityManager::getInstance().CreateParticle();
 	part->SetupParticle(ParticleType::TANK_EXPLODE);

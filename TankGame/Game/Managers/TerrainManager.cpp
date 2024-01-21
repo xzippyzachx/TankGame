@@ -75,8 +75,6 @@ void TerrainManager::Generate()
                 continue;
             }
 
-            //std::cout << x << "," << newY << "\n";
-
             Color color = Color(0.502f, 0.333f, 0.196f);
             if (r == height - 1)
             {
@@ -92,7 +90,7 @@ float TerrainManager::GetFloor(float x)
 {
     int tileX = (int)x - ((int)x % (int)tileSize);
 
-    float floor = 0.0f;
+    float floor = -25.0f;
     for (auto& tilePos : tiles)
 	{
         if (tilePos.first.x == tileX && tilePos.first.y > floor)
