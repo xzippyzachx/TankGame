@@ -75,7 +75,10 @@ void Projectile::CheckHit()
 
 	SetVelocity(Vector2(0.0f, 0.0f));
 
-	TurnManager::getInstance().NextTurn(); // ToDo: Check how many shells are left
+	if (tankShotBy->GetShells() <= 0)
+	{
+		TurnManager::getInstance().NextTurn();
+	}
 
 	EntityManager::getInstance().DestroyProjectile(this);
 }

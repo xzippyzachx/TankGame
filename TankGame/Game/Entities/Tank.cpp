@@ -216,6 +216,7 @@ void Tank::Fire()
 	shells--;
 
 	Projectile* newProjectile = EntityManager::getInstance().CreateProjectile();
+	newProjectile->SetShotBy(this);
 	newProjectile->SetPosition(Vector2(position.x - 2.0f, position.y + 10.0f));
 
 	// std::cout << "Radians: " << turretAngle * (PI / 180.0f) <<"\n";

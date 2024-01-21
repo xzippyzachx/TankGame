@@ -49,7 +49,12 @@ int TurnManager::GetCurrentTurn()
 }
 
 void TurnManager::NextTurn()
-{   
+{
+    if (GameManager::getInstance().gameState == GameState::GAMEOVER)
+    {
+        return;
+    }
+
     int playerCount = GameManager::getInstance().playerCount;
     if (Tank::GetDeadAmount() >= playerCount - 1)
     {

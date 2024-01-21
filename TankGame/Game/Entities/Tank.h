@@ -15,6 +15,7 @@ public:
 	static int GetDeadAmount() { return deadAmount; }
 	bool IsDead() { return dead; }
 	void Winner();
+	int GetShells() { return shells; }
 protected:
 	static int nextId;
 	int id;
