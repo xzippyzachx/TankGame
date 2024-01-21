@@ -15,6 +15,11 @@ void TerrainManager::Update(float dt)
 
 void TerrainManager::Draw()
 {
+    for (auto& tree : trees)
+	{
+        tree.second->Draw();
+    }
+
     for (auto& tile : tiles)
 	{
         float x = tile.first.x;
@@ -48,17 +53,21 @@ void TerrainManager::Draw()
 void TerrainManager::Destroy()
 {
     tiles.clear();
+    trees.clear();
 }
 
 void TerrainManager::Reset()
 {
     tiles.clear();
+    trees.clear();
 }
 
 void TerrainManager::Generate()
 {
     height = (int)(surface / tileSize);
     width = APP_VIRTUAL_WIDTH / (int)tileSize;
+
+
 
     for (int c = 0; c <= width; c++)
     {
@@ -78,7 +87,13 @@ void TerrainManager::Generate()
             Color color = Color(0.502f, 0.333f, 0.196f);
             if (r == height - 1)
             {
-                color = Color(0.49f, 0.749f, 0.059f);
+                color = Color(0.137f, 0.749f, 0.463f);
+
+                int r = (int)FRAND_RANGE(0, 20);
+                if (r <= 1)
+                {
+                    CreateTree(Vector2(x, newY), r);
+                }
             }
 
             tiles.insert({ Vector2(x, newY),  color});
@@ -108,9 +123,13 @@ void TerrainManager::Explode(Vector2 position)
 
     for (auto& tile : tiles)
 	{
-        if (!(position.Distance(tile.first) < 20.0f))
+        if (!(position.Distance(tile.first) < 25.0f))
         {
             newTiles.insert({ tile.first, tile.second });
+        }
+        else
+        {
+            DestroyTree(tile.first);
         }
     }
     
@@ -134,12 +153,10 @@ void TerrainManager::Settle()
 
             //std::cout << x << "," << y << "\n";
             Vector2 pos = Vector2(x, y);
-
-            if (tiles.find(Vector2(x, y)) == tiles.end())
+            if (tiles.find(pos) == tiles.end())
             {
                 fall = true;
                 fallAmount += tileSize;
-                //std::cout << "Air" << "\n";
             }
             else if (!fall)
             {
@@ -147,6 +164,8 @@ void TerrainManager::Settle()
             }
             else
             {
+                DestroyTree(pos);
+
                 Color color = tiles[pos];
                 pos.y -= fallAmount;
                 newTiles.insert({ pos, color});
@@ -155,4 +174,36 @@ void TerrainManager::Settle()
     }
 
     tiles.swap(newTiles);
+}
+
+void TerrainManager::CreateTree(Vector2 pos, int type)
+{
+    char* treeFilename;
+	switch (type)
+	{
+		case 0:
+			treeFilename = ".\\Resources\\Sprites\\treePine.png";
+			break;
+		case 1:
+			treeFilename =  ".\\Resources\\Sprites\\treeLong.png";
+			break;
+        default:
+			treeFilename = ".\\Resources\\Sprites\\treePine.png";
+			break;
+	}
+
+    CSimpleSprite* newTree = App::CreateSprite(treeFilename, 1, 1);
+	newTree->SetScale(0.1f);
+
+    Vector2 treePos = pos + Vector2(0.0f, 27.0f);
+    newTree->SetPosition(treePos.x, treePos.y);
+	trees.insert({ pos, newTree });
+}
+
+void TerrainManager::DestroyTree(Vector2 pos)
+{
+    if (trees.find(pos) != trees.end())
+    {
+        trees.erase(pos);
+    }
 }

@@ -41,6 +41,8 @@ private:
 	////////
 
 	void Settle();
+	void CreateTree(Vector2 pos, int type);
+	void DestroyTree(Vector2 pos);
 
     float tileSize = 5.0f;
     float amplitude = 20.0f;
@@ -48,5 +50,6 @@ private:
     float surface = 100.0f;
 
     std::unordered_map<Vector2, Color, Vector2::HashFunction> tiles;
+	std::unordered_map<Vector2, CSimpleSprite*, Vector2::HashFunction> trees;
 };
 
