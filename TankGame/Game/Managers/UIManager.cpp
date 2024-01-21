@@ -20,8 +20,9 @@ void UIManager::Draw()
 
         App::Print(10, APP_VIRTUAL_HEIGHT - 20, ("Player " + currentPlayer).c_str());
         App::Print(10, APP_VIRTUAL_HEIGHT - 40, ("Health: " + tankHealth).c_str());
-        App::Print(10, APP_VIRTUAL_HEIGHT - 60, ("Angle: " + turretAngle).c_str());
-        App::Print(10, APP_VIRTUAL_HEIGHT - 80, ("Power: " + turretPower).c_str());
+        App::Print(10, APP_VIRTUAL_HEIGHT - 60, ("Fuel: " + tankFuel).c_str());
+        App::Print(10, APP_VIRTUAL_HEIGHT - 80, ("Angle: " + turretAngle).c_str());
+        App::Print(10, APP_VIRTUAL_HEIGHT - 100, ("Power: " + turretPower).c_str());
     }
 }
 
@@ -43,6 +44,12 @@ void UIManager::SetTankHealth(float health)
 {
     tankHealth = std::to_string(health);
     tankHealth = tankHealth.substr(0, tankHealth.find("."));
+}
+
+void UIManager::SetTankFuel(float fuel)
+{
+    tankFuel = std::to_string(fuel);
+    tankFuel = tankFuel.substr(0, tankFuel.find("."));
 }
 
 void UIManager::SetTurretAngle(float angle)

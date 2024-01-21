@@ -60,8 +60,10 @@ void Tank::NewTurn()
 	}
 
 	shells = 1;
+	fuel = 100.0f;
 
 	UIManager::getInstance().SetTankHealth(health);
+	UIManager::getInstance().SetTankFuel(fuel);
 	UIManager::getInstance().SetTurretAngle(turretAngle);
 	UIManager::getInstance().SetTurretPower(turretPower);
 }
@@ -88,6 +90,7 @@ void Tank::Damage(float amount)
 void Tank::Winner()
 {
 	shells = 1000;
+	fuel = 1000.0f;
 }
 
 void Tank::ProcessInput(float dt)
@@ -121,6 +124,14 @@ void Tank::Move(float dt, float inputX)
 		return;
 	}
 
+	if (fuel <= 0.0f)
+	{
+		fuel = 0.0f;
+		EngineSound(false);
+		return;
+	}
+	fuel -= dt * 12.0f;
+
 	if (position.x < 0)
 	{
 		position.x = 0;
@@ -134,6 +145,7 @@ void Tank::Move(float dt, float inputX)
 
 	position.x += inputX * trackSpeed * dt;
 
+	UIManager::getInstance().SetTankFuel(fuel);
 	EngineSound(true);
 }
 

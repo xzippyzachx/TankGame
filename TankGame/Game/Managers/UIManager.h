@@ -23,6 +23,7 @@ public:
 
 	void SetCurrentPlayer(int id);
 	void SetTankHealth(float health);
+	void SetTankFuel(float fuel);
     void SetTurretAngle(float angle);
     void SetTurretPower(float power);
 private:
@@ -37,6 +38,7 @@ private:
 
 	std::string currentPlayer;
 	std::string tankHealth;
+	std::string tankFuel;
     std::string turretAngle;
     std::string turretPower;
 };

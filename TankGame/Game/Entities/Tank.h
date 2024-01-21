@@ -26,6 +26,8 @@ protected:
 	float turretAngle = 150.0f;
 	float turretPower = 50.0f;
 
+	float fuel = 100.0f;
+
 	static int deadAmount;
 	bool dead = false;
 	float health = 100.0f;
