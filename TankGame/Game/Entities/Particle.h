@@ -1,5 +1,12 @@
 #pragma once
 #include "Entity.h"
+
+enum ParticleType
+{
+    SHELL_SMOKE,
+    TANK_EXPLODE,
+};
+
 class Particle : public Entity
 {
 public:
@@ -7,8 +14,8 @@ public:
 	void Update(float dt) override;
     void Destroy() override;
 
-	void SetSprite(char* fileName, Vector2 offset) override;
+    void SetupParticle(ParticleType type);
 protected:
-
+    int frameCount = 1;
 };
 

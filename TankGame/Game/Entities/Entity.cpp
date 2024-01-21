@@ -34,9 +34,9 @@ void Entity::Destroy()
 	spriteOffsets.clear();
 }
 
-void Entity::SetSprite(char* fileName, Vector2 offset)
+void Entity::SetSprite(char* fileName, Vector2 offset, int columns)
 {
-	CSimpleSprite* newSprite = App::CreateSprite(fileName, 1, 1);
+	CSimpleSprite* newSprite = App::CreateSprite(fileName, columns, 1);
 	newSprite->SetScale(0.25f);
 	sprites.push_back(newSprite);
 	spriteOffsets.push_back(offset);

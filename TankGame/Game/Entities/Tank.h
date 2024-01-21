@@ -6,8 +6,6 @@ public:
 	Tank();
 	void Update(float dt) override;
 
-	void SetSprite(char* fileName, Vector2 offset) override;
-
 	int NextId() { nextId++; return nextId - 1; }
 	int GetId() { return id; }
 

@@ -13,7 +13,7 @@ public:
 	void Draw();
 	virtual void Destroy();
 
-	virtual void SetSprite(char* fileName, Vector2 offset);
+	virtual void SetSprite(char* fileName, Vector2 offset, int columns = 1);
 	virtual CSimpleSprite* GetSprite(int spriteId);
 
 	void SetPosition(Vector2 pos);

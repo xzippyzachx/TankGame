@@ -52,11 +52,6 @@ void Tank::Update(float dt)
 	position.y = TerrainManager::getInstance().GetFloor(position.x) + 20.0f;
 }
 
-void Tank::SetSprite(char* fileName, Vector2 offset)
-{
-	Entity::SetSprite(fileName, offset);
-}
-
 void Tank::NewTurn()
 {
 	if (dead)
@@ -228,9 +223,12 @@ void Tank::Die()
 	dead = true;
 	deadAmount++;
 
+	Particle* part = EntityManager::getInstance().CreateParticle();
+	part->SetupParticle(ParticleType::TANK_EXPLODE);
+	part->SetPosition(position);
+
 	sprites.clear();
 	spriteOffsets.clear();
-
 	SetSprite(".\\Resources\\Sprites\\tanks_destroyed_body1.png", Vector2(0.0f,-10.0f));
 
 	App::PlaySound(".\\Resources\\Audio\\tank_explosion.wav");

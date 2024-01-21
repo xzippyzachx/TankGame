@@ -30,11 +30,6 @@ void Projectile::Destroy()
 	Entity::Destroy();
 }
 
-void Projectile::SetSprite(char* fileName, Vector2 offset)
-{
-	Entity::SetSprite(fileName, offset);
-}
-
 void Projectile::SimulatePhysics(float dt)
 {
 	// Drag
@@ -63,7 +58,10 @@ void Projectile::CheckHit()
 		TerrainManager::getInstance().Explode(position);
 
 		Particle* part = EntityManager::getInstance().CreateParticle();
+		part->SetupParticle(ParticleType::SHELL_SMOKE);
 		part->SetPosition(position);
+
+		App::PlaySound(".\\Resources\\Audio\\shell_dirt.wav");
 	}
 	else if (hitTank != -1)
 	{

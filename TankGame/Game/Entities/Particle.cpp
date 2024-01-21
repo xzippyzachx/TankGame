@@ -2,17 +2,17 @@
 #include "Particle.h"
 
 #include "../Managers/EntityManager.h"
+#include <numeric>
 
 Particle::Particle() : Entity()
 {
-    SetSprite(".\\Resources\\Sprites\\shell_land.png", Vector2(0.0f, 0.0f));
 }
 
 void Particle::Update(float dt)
 {
     Entity::Update(dt);
 
-    if (GetSprite(0)->GetFrame() == 3)
+    if (GetSprite(0)->GetFrame() == frameCount - 1)
     {
         EntityManager::getInstance().DestroyParticle(this);
     }
@@ -23,13 +23,29 @@ void Particle::Destroy()
     Entity::Destroy();
 }
 
-void Particle::SetSprite(char *fileName, Vector2 offset)
+void Particle::SetupParticle(ParticleType type)
 {
-    CSimpleSprite* newSprite = App::CreateSprite(fileName, 4, 1);
-	newSprite->SetScale(0.5f);
-    newSprite->CreateAnimation(0, 0.005f / APP_MAX_FRAME_RATE, { 0, 1, 2, 3});
-    newSprite->SetAnimation(0);
+    char* particleFilename;
+	switch (type)
+	{
+		case ParticleType::SHELL_SMOKE:
+			particleFilename = ".\\Resources\\Sprites\\shell_smoke.png";
+            frameCount = 4;
+			break;
+		case ParticleType::TANK_EXPLODE:
+			particleFilename =  ".\\Resources\\Sprites\\tank_explode.png";
+            frameCount = 5;
+			break;
+        default:
+			particleFilename = ".\\Resources\\Sprites\\shell_smoke.png";
+			break;
+	}
+    SetSprite(particleFilename, Vector2(0.0f, 0.0f), frameCount);
 
-	sprites.push_back(newSprite);
-	spriteOffsets.push_back(offset);
+    GetSprite(0)->SetScale(0.5f);
+
+    std::vector<int> frames(frameCount);
+    std::iota(std::begin(frames), std::end(frames), 0);
+    GetSprite(0)->CreateAnimation(0, 0.005f / APP_MAX_FRAME_RATE, frames);
+    GetSprite(0)->SetAnimation(0);
 }
