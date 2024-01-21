@@ -66,6 +66,10 @@ void Projectile::CheckHit()
 	else if (hitTank != -1)
 	{
 		EntityManager::getInstance().GetTank(hitTank)->Damage(damage);
+
+		Particle* part = EntityManager::getInstance().CreateParticle();
+		part->SetupParticle(ParticleType::TANK_SPARK);
+		part->SetPosition(position);
 	}
 
 	SetVelocity(Vector2(0.0f, 0.0f));
