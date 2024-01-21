@@ -191,7 +191,7 @@ void Tank::Power(float dt, float inputY)
 
 	if (turretPower >= 0.0f && turretPower <= 200.0f)
 	{
-		turretPower += -inputY * turretPowerSpeed * dt;
+		turretPower += inputY * turretPowerSpeed * dt;
 	}
 	else if (turretPower < 0.0f)
 	{

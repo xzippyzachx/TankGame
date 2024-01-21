@@ -5,6 +5,9 @@
 
 UIManager::UIManager()
 {
+    controls = App::CreateSprite(".\\Resources\\Sprites\\controls_screen.png", 1, 1);
+    controls->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
+    controls->SetScale(0.66666f);
 }
 
 void UIManager::operator=(UIManager const&)
@@ -17,6 +20,7 @@ void UIManager::Draw()
 
     if (gameState == GameState::STARTING)
     {
+        controls->Draw();
         App::Print((APP_VIRTUAL_WIDTH / 2.0f) - ("Player Count: " + playerCount).size() * 4.0f, APP_VIRTUAL_HEIGHT / 2.0f, ("Player Count: " + playerCount).c_str(), 1, 1, 1, GLUT_BITMAP_9_BY_15);
     }
     else if (gameState == GameState::PLAYING || gameState == GameState::GAMEOVER)
@@ -33,6 +37,7 @@ void UIManager::Draw()
 
 void UIManager::Destroy()
 {
+    delete controls;
 }
 
 void UIManager::SetPlayerCount(int count)

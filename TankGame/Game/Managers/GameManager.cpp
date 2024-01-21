@@ -34,11 +34,11 @@ void GameManager::Update(float dt)
 			StartGame();
 		}
 
-		if (App::GetController().CheckButton(APP_PAD_EMUL_RIGHT_THUMB_UP, true) || App::IsKeyPressed(APP_PAD_EMUL_RIGHT_THUMB_UP))
+		if (App::GetController().GetRightThumbStickY() > 0.25f)
 		{
 			ChangePlayerCount(true);
 		}
-		if (App::GetController().CheckButton(APP_PAD_EMUL_RIGHT_THUMB_DOWN, true) || App::IsKeyPressed(APP_PAD_EMUL_RIGHT_THUMB_DOWN))
+		if (App::GetController().GetRightThumbStickY() < -0.25f)
 		{
 			ChangePlayerCount(false);
 		}
@@ -67,7 +67,7 @@ void GameManager::Update(float dt)
 		if (App::GetController().CheckButton(XINPUT_GAMEPAD_X, true))
 		{
 			ResetGame();
-			StartGame();
+			gameState = GameState::STARTING;
 		}
 	}
 }

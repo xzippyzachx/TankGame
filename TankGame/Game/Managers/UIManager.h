@@ -45,5 +45,7 @@ private:
 	std::string tankFuel;
     std::string turretAngle;
     std::string turretPower;
+
+	CSimpleSprite* controls;
 };
 
