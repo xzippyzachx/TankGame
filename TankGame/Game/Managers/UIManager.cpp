@@ -14,7 +14,12 @@ void UIManager::operator=(UIManager const&)
 void UIManager::Draw()
 {
     GameState gameState = GameManager::getInstance().gameState;
-    if (gameState == GameState::PLAYING || gameState == GameState::GAMEOVER)
+
+    if (gameState == GameState::STARTING)
+    {
+        App::Print((APP_VIRTUAL_WIDTH / 2.0f) - ("Player Count: " + playerCount).size() * 4.0f, APP_VIRTUAL_HEIGHT / 2.0f, ("Player Count: " + playerCount).c_str(), 1, 1, 1, GLUT_BITMAP_9_BY_15);
+    }
+    else if (gameState == GameState::PLAYING || gameState == GameState::GAMEOVER)
 	{
         App::Print((APP_VIRTUAL_WIDTH / 2.0f) - centerMessage.size() * 4.0f, APP_VIRTUAL_HEIGHT / 2.0f, centerMessage.c_str(), 1, 1, 1, GLUT_BITMAP_9_BY_15);
 
@@ -28,6 +33,11 @@ void UIManager::Draw()
 
 void UIManager::Destroy()
 {
+}
+
+void UIManager::SetPlayerCount(int count)
+{
+    playerCount = std::to_string(count);
 }
 
 void UIManager::SetCenterMessage(std::string msg)

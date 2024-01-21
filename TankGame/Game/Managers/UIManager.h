@@ -19,6 +19,8 @@ public:
 	void Draw();
 	void Destroy();
 
+	void SetPlayerCount(int count);
+
 	void SetCenterMessage(std::string msg);
 
 	void SetCurrentPlayer(int id);
@@ -33,6 +35,8 @@ private:
 	UIManager(UIManager const&);
     void operator=(UIManager const&);
 	////////
+
+	std::string playerCount;
 
 	std::string centerMessage;
 

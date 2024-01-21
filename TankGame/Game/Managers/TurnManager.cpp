@@ -49,8 +49,9 @@ int TurnManager::GetCurrentTurn()
 }
 
 void TurnManager::NextTurn()
-{
-    if (Tank::GetDeadAmount() >= PLAYER_COUNT - 1)
+{   
+    int playerCount = GameManager::getInstance().playerCount;
+    if (Tank::GetDeadAmount() >= playerCount - 1)
     {
         currentTurn = GetWinner();
         UIManager::getInstance().SetCurrentPlayer(currentTurn);
@@ -62,7 +63,7 @@ void TurnManager::NextTurn()
     do
     {
         currentTurn++;
-        if (currentTurn == PLAYER_COUNT)
+        if (currentTurn == playerCount)
         {
             currentTurn = 0;
         }
@@ -84,7 +85,8 @@ void TurnManager::NewTurn()
 
 int TurnManager::GetWinner()
 {
-    for (int i = 0; i < PLAYER_COUNT; i++)
+    int playerCount = GameManager::getInstance().playerCount;
+    for (int i = 0; i < playerCount; i++)
 	{
         Tank* tank = EntityManager::getInstance().GetTank(i);
         if (!tank->IsDead())

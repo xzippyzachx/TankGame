@@ -2,6 +2,8 @@
 #include "..\..\stdafx.h"
 #include "..\..\app\app.h"
 
+#include "..\GameSettings.h"
+
 enum GameState
 {
     STARTING,
@@ -28,6 +30,7 @@ public:
     void GameOver(int winner);
 
     GameState gameState;
+    int playerCount = PLAYER_COUNT;
 
 private:
     // Singlton pattern
@@ -39,5 +42,8 @@ private:
 
     void StartGame();
     void ResetGame();
+
+    void ChangePlayerCount(bool dir); // false: decrease | true: increase
+    float changeDelay;
 };
 

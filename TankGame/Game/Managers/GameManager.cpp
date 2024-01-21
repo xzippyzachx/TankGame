@@ -11,6 +11,9 @@
 
 GameManager::GameManager()
 {
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+	UIManager::getInstance().SetPlayerCount(playerCount);
 }
 
 void GameManager::operator=(GameManager const&)
@@ -29,6 +32,24 @@ void GameManager::Update(float dt)
 		if (App::GetController().CheckButton(XINPUT_GAMEPAD_X, true))
 		{
 			StartGame();
+		}
+
+		if (App::GetController().CheckButton(APP_PAD_EMUL_RIGHT_THUMB_UP, true) || App::IsKeyPressed(APP_PAD_EMUL_RIGHT_THUMB_UP))
+		{
+			ChangePlayerCount(true);
+		}
+		if (App::GetController().CheckButton(APP_PAD_EMUL_RIGHT_THUMB_DOWN, true) || App::IsKeyPressed(APP_PAD_EMUL_RIGHT_THUMB_DOWN))
+		{
+			ChangePlayerCount(false);
+		}
+
+		if (changeDelay > 0.0f)
+		{
+			changeDelay -= dt;
+		}
+		else if (changeDelay != 0.0f)
+		{
+			changeDelay = 0.0f;
 		}
 	}
 	else if (gameState == GameState::PLAYING)
@@ -78,9 +99,9 @@ void GameManager::StartGame()
 
 	TerrainManager::getInstance().Generate();
 
-	float space = (APP_VIRTUAL_WIDTH - 200.0f) / (PLAYER_COUNT - 1);
+	float space = (APP_VIRTUAL_WIDTH - 200.0f) / (playerCount - 1);
 	float x = 100.0f;
-	for (int i = 0; i < PLAYER_COUNT; i++)
+	for (int i = 0; i < playerCount; i++)
 	{
 		Tank* newTank = EntityManager::getInstance().CreateTank();
 		newTank->SetPosition(Vector2(x, 100.0f));
@@ -103,4 +124,25 @@ void GameManager::ResetGame()
 	EntityManager::getInstance().Reset();
 	TerrainManager::getInstance().Reset();
 	TurnManager::getInstance().Reset();
+}
+
+void GameManager::ChangePlayerCount(bool dir)
+{
+	if (changeDelay != 0.0f)
+	{
+		return;
+	}
+	changeDelay = 0.2f;
+
+	playerCount += dir ? 1 : -1;
+	if (playerCount <= 1)
+	{
+		playerCount = 2;
+	}
+	else if (playerCount > 4)
+	{
+		playerCount = 4;
+	}
+
+	UIManager::getInstance().SetPlayerCount(playerCount);
 }

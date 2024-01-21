@@ -6,6 +6,7 @@
 #include "..\Managers\EntityManager.h"
 #include "..\Managers\TerrainManager.h"
 #include "..\Managers\TurnManager.h"
+#include "..\Managers\GameManager.h"
 
 Projectile::Projectile() : Entity()
 {
@@ -86,7 +87,8 @@ int Projectile::CheckTankHit()
 		return -1;
 	}
 
-	for (int i = 0; i < PLAYER_COUNT; i++)
+	int playerCount = GameManager::getInstance().playerCount;
+	for (int i = 0; i < playerCount; i++)
 	{
 		Tank* tank = EntityManager::getInstance().GetTank(i);
 
