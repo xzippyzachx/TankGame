@@ -48,6 +48,14 @@ void EntityManager::Destroy()
 	particles.clear();
 }
 
+void EntityManager::Reset()
+{
+	Tank::Reset();
+	tanks.clear();
+	projectiles.clear();
+	particles.clear();
+}
+
 Tank* EntityManager::CreateTank()
 {
 	Tank* newTank = new Tank();

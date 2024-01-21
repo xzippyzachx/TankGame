@@ -30,7 +30,7 @@ public:
     float GetFloor(float x);
     void Explode(Vector2 position);
 
-    void Settle();
+	void Reset();
     
 private:
 	// Singlton pattern
@@ -39,6 +39,8 @@ private:
 	TerrainManager(TerrainManager const&);
     void operator=(TerrainManager const&);
 	////////
+
+	void Settle();
 
     float tileSize = 5.0f;
     float amplitude = 20.0f;

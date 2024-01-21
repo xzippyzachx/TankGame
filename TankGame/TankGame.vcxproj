@@ -184,6 +184,7 @@
     <ClInclude Include="App\SimpleController.h" />
     <ClInclude Include="App\SimpleSound.h" />
     <ClInclude Include="App\SimpleSprite.h" />
+    <ClInclude Include="Game\Managers\GameManager.h" />
     <ClInclude Include="Game\Color.h" />
     <ClInclude Include="Game\Managers\EntityManager.h" />
     <ClInclude Include="Game\Entities\Entity.h" />
@@ -205,9 +206,10 @@
     <ClCompile Include="App\SimpleController.cpp" />
     <ClCompile Include="App\SimpleSound.cpp" />
     <ClCompile Include="App\SimpleSprite.cpp" />
+    <ClCompile Include="Game\Managers\GameManager.cpp" />
     <ClCompile Include="Game\Managers\EntityManager.cpp" />
     <ClCompile Include="Game\Entities\Entity.cpp" />
-    <ClCompile Include="Game\Managers\GameManager.cpp" />
+    <ClCompile Include="Game\GameMain.cpp" />
     <ClCompile Include="Game\Entities\Tank.cpp" />
     <ClCompile Include="Game\Entities\Projectile.cpp" />
     <ClCompile Include="Game\Entities\Particle.cpp" />

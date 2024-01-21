@@ -13,12 +13,13 @@ public:
 		return instance;
 	}
 	////////
+    void Update(float dt);
 	void Destroy();
+    void Reset();
 
-    int GetCurrentTurn() { return currentTurn; }
+    int GetCurrentTurn();
     void NextTurn();
     void NewTurn();
-
 private:
 	// Singlton pattern
 	////////
@@ -27,6 +28,10 @@ private:
     void operator=(TurnManager const&);
 	////////
 
-    int currentTurn = 0;
+    float turnDelay = 1.0f;
+
+    int currentTurn = -1;
+
+    int GetWinner();
 };
 

@@ -26,7 +26,7 @@
     <ClCompile Include="Game\Entities\Entity.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Managers\GameManager.cpp">
+    <ClCompile Include="Game\GameMain.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Entities\Projectile.cpp" />
@@ -35,6 +35,8 @@
     <ClCompile Include="Game\Managers\UIManager.cpp" />
     <ClCompile Include="Game\Managers\TerrainManager.cpp" />
     <ClCompile Include="Game\Entities\Particle.cpp" />
+    <ClCompile Include="Game\Managers\TurnManager.cpp" />
+    <ClCompile Include="Game\Managers\GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -76,6 +78,8 @@
     <ClInclude Include="Game\Managers\UIManager.h" />
     <ClInclude Include="Game\Managers\TerrainManager.h" />
     <ClInclude Include="Game\Entities\Particle.h" />
+    <ClInclude Include="Game\Managers\TurnManager.h" />
+    <ClInclude Include="Game\Managers\GameManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">

@@ -23,6 +23,7 @@ public:
 	void Update(float dt);
 	void Draw();
 	void Destroy();
+	void Reset();
 
 	Tank* CreateTank();
 	Projectile* CreateProjectile();

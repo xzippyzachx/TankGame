@@ -3,9 +3,6 @@
 
 TerrainManager::TerrainManager()
 {
-    height = (int)(surface / tileSize);
-    width = APP_VIRTUAL_WIDTH / (int)tileSize;
-    Generate();
 }
 
 void TerrainManager::operator=(TerrainManager const &)
@@ -53,8 +50,16 @@ void TerrainManager::Destroy()
     tiles.clear();
 }
 
+void TerrainManager::Reset()
+{
+    tiles.clear();
+}
+
 void TerrainManager::Generate()
 {
+    height = (int)(surface / tileSize);
+    width = APP_VIRTUAL_WIDTH / (int)tileSize;
+
     for (int c = 0; c <= width; c++)
     {
         float x = (float)c * tileSize;

@@ -1,36 +1,82 @@
-//------------------------------------------------------------------------
-// GameTest.cpp
-//------------------------------------------------------------------------
 #include "stdafx.h"
-//------------------------------------------------------------------------
-#include <windows.h>
-#include <math.h>
-//------------------------------------------------------------------------
-#include "..\..\app\app.h"
-//------------------------------------------------------------------------
-
+#include "GameManager.h"
 #include "EntityManager.h"
-#include "UIManager.h"
+
+#include "..\GameSettings.h"
 #include "TerrainManager.h"
+#include "UIManager.h"
 #include "TurnManager.h"
 
 #include "..\Entities\Tank.h"
-#include "..\Entities\Projectile.h"
 
-//------------------------------------------------------------------------
-// Called before first update. Do any initial setup here.
-//------------------------------------------------------------------------
-void Init()
+GameManager::GameManager()
 {
-#ifdef _DEBUG
-	// Init debug console
-	AllocConsole();
-	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
-#endif
+}
+
+void GameManager::operator=(GameManager const&)
+{
+}
+
+void GameManager::Update(float dt)
+{
+	if (App::GetController().CheckButton(XINPUT_GAMEPAD_LEFT_SHOULDER, true))
+	{
+		glutFullScreenToggle();
+	}
+
+	if (gameState == GameState::STARTING)
+	{
+		if (App::GetController().CheckButton(XINPUT_GAMEPAD_X, true))
+		{
+			StartGame();
+		}
+	}
+	else if (gameState == GameState::PLAYING)
+	{
+		TerrainManager::getInstance().Update(dt);
+		EntityManager::getInstance().Update(dt);
+		TurnManager::getInstance().Update(dt);
+	}
+	else if (gameState == GameState::GAMEOVER)
+	{
+		TerrainManager::getInstance().Update(dt);
+		EntityManager::getInstance().Update(dt);
+		TurnManager::getInstance().Update(dt);
+
+		if (App::GetController().CheckButton(XINPUT_GAMEPAD_X, true))
+		{
+			ResetGame();
+			StartGame();
+		}
+	}
+}
+
+void GameManager::Draw()
+{
+	if (gameState == GameState::PLAYING || gameState == GameState::GAMEOVER)
+	{
+		TerrainManager::getInstance().Draw();
+		EntityManager::getInstance().Draw();
+	}
+	UIManager::getInstance().Draw();
+}
+
+void GameManager::Destroy()
+{
+	TerrainManager::getInstance().Destroy();
+	EntityManager::getInstance().Destroy();
+	UIManager::getInstance().Destroy();
+	TurnManager::getInstance().Destroy();
+}
+
+void GameManager::StartGame()
+{
+	gameState = GameState::PLAYING;
 
 	// Backgound color
 	glClearColor(0.518f, 0.8f, 1.0f, 1.0f);
+
+	TerrainManager::getInstance().Generate();
 
 	float space = (APP_VIRTUAL_WIDTH - 200.0f) / (PLAYER_COUNT - 1);
 	float x = 100.0f;
@@ -41,43 +87,20 @@ void Init()
 
 		x += space;
 	}
+
+	TurnManager::getInstance().NextTurn();
 }
 
-//------------------------------------------------------------------------
-// Update your simulation here. deltaTime is the elapsed time since the last update in ms.
-// This will be called at no greater frequency than the value of APP_MAX_FRAME_RATE
-//------------------------------------------------------------------------
-void Update(float dt)
+void GameManager::GameOver(int winner)
 {
-	dt = dt / 1000.0f;
+	gameState = GameState::GAMEOVER;
 
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_LEFT_SHOULDER, true))
-	{
-		glutFullScreenToggle();
-	}
-
-	TerrainManager::getInstance().Update(dt);
-	EntityManager::getInstance().Update(dt);
+    UIManager::getInstance().SetCenterMessage("Game Over - Player " + std::to_string(winner + 1) + " Wins!");
 }
 
-//------------------------------------------------------------------------
-// Add your display calls here (DrawLine,Print, DrawSprite.) 
-// See App.h 
-//------------------------------------------------------------------------
-void Render()
+void GameManager::ResetGame()
 {
-	TerrainManager::getInstance().Draw();
-	EntityManager::getInstance().Draw();
-	UIManager::getInstance().Draw();
-}
-//------------------------------------------------------------------------
-// Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.
-// Just before the app exits.
-//------------------------------------------------------------------------
-void Shutdown()
-{
-	TerrainManager::getInstance().Destroy();
-	EntityManager::getInstance().Destroy();
-	UIManager::getInstance().Destroy();
-	TurnManager::getInstance().Destroy();
+	EntityManager::getInstance().Reset();
+	TerrainManager::getInstance().Reset();
+	TurnManager::getInstance().Reset();
 }

@@ -5,6 +5,7 @@ class Tank : public Entity
 public:
 	Tank();
 	void Update(float dt) override;
+	static void Reset() { nextId = 0; deadAmount = 0; }
 
 	int NextId() { nextId++; return nextId - 1; }
 	int GetId() { return id; }
@@ -12,6 +13,8 @@ public:
 	void NewTurn();
 	void Damage(float amount);
 	static int GetDeadAmount() { return deadAmount; }
+	bool IsDead() { return dead; }
+	void Winner();
 protected:
 	static int nextId;
 	int id;

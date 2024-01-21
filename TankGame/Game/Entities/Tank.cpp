@@ -85,6 +85,11 @@ void Tank::Damage(float amount)
 	App::PlaySound(".\\Resources\\Audio\\tank_hit.wav");
 }
 
+void Tank::Winner()
+{
+	shells = 1000;
+}
+
 void Tank::ProcessInput(float dt)
 {
 	if (TurnManager::getInstance().GetCurrentTurn() != id || dead)
@@ -220,6 +225,8 @@ void Tank::Die()
 	spriteOffsets.clear();
 	SetSprite(".\\Resources\\Sprites\\tanks_destroyed_body1.png", Vector2(0.0f,-10.0f));
 
+	EngineSound(false);
+	TurretSound(false);
 	App::PlaySound(".\\Resources\\Audio\\tank_explosion.wav");
 
 	if (TurnManager::getInstance().GetCurrentTurn() == id)
