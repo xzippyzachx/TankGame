@@ -8,13 +8,6 @@ UIManager::UIManager()
     controls = App::CreateSprite(".\\Resources\\Sprites\\controls_screen.png", 1, 1);
     controls->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
     controls->SetScale(0.66666f);
-
-    for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
-    {
-        std::string health = std::to_string(TANK_START_HEALTH);
-        health = health.substr(0, health.find("."));
-        tankHealthList.push_back(health);
-    }
 }
 
 void UIManager::operator=(UIManager const&)
@@ -101,4 +94,15 @@ void UIManager::SetTurretPower(float power)
 void UIManager::SetSelectedProjectile(std::string projectile)
 {
     selectedProjectile = projectile;
+}
+
+void UIManager::StartGame()
+{
+    tankHealthList.clear();
+    for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
+    {
+        std::string health = std::to_string(TANK_START_HEALTH);
+        health = health.substr(0, health.find("."));
+        tankHealthList.push_back(health);
+    }
 }

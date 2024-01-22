@@ -12,6 +12,7 @@ public:
 	int GetId() { return id; }
 
 	void NewTurn();
+	void EndTurn();
 	void Damage(float amount);
 	static int GetDeadAmount() { return deadAmount; }
 	bool IsDead() { return dead; }

@@ -2,6 +2,8 @@
 #include "..\..\stdafx.h"
 #include "..\..\app\app.h"
 
+#include "..\GameSettings.h"
+
 class TurnManager
 {
 public:
@@ -28,7 +30,7 @@ private:
     void operator=(TurnManager const&);
 	////////
 
-    float turnDelay = 1.0f;
+    float turnDelay = TIME_BETWEEN_TURNS;
 
     int currentTurn = -1;
 

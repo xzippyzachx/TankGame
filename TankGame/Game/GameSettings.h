@@ -5,6 +5,8 @@
 #define PLAYER_COUNT        (2)         // Default player count
 #define PLAYER_COUNT_MAX    (4)         // Max player count
 
+#define TIME_BETWEEN_TURNS  (2.0f)    // Starting tank health
+
 #define TERRAIN_SURFACE     (100.0f)    // Adjusts surface height
 #define TERRAIN_AMPLITUDE   (20.0f)     // Adjusts hill height
 #define TERRAIN_PERIOD      (100.0f)    // Adjusts hill width

@@ -30,6 +30,8 @@ public:
     void SetTurretPower(float power);
 
 	void SetSelectedProjectile(std::string projectile);
+
+	void StartGame();
 private:
 	// Singlton pattern
 	////////

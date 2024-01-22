@@ -7,6 +7,7 @@ struct ProjectileType
     int id;
     std::string name;
     char* filename;
+    char* soundFilename;
     float damage;
     float terrainRadius;
     int particleType;
@@ -28,7 +29,7 @@ protected:
     Tank* tankShotBy;
 
     Vector2 velocity;
-    float armTime = 0.01f;
+    float armTime = 0.1f;
 
     void SimulatePhysics(float dt);
     void CheckHit();

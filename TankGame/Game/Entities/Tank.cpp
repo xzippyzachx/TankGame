@@ -76,6 +76,12 @@ void Tank::NewTurn()
 	Highlight();
 }
 
+void Tank::EndTurn()
+{
+	EngineSound(false);
+	TurretSound(false);
+}
+
 void Tank::Damage(float amount)
 {
 	if (dead)
@@ -206,13 +212,13 @@ void Tank::Power(float dt, float inputY)
 		return;
 	}
 
-	if (turretPower >= 0.0f && turretPower <= 200.0f)
+	if (turretPower >= 20.0f && turretPower <= 200.0f)
 	{
 		turretPower += inputY * turretPowerSpeed * dt;
 	}
-	else if (turretPower < 0.0f)
+	else if (turretPower < 20.0f)
 	{
-		turretPower = 0.0f;
+		turretPower = 20.0f;
 	}
 	else
 	{

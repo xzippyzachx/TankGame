@@ -98,6 +98,8 @@ void GameManager::StartGame()
 	// Backgound color
 	glClearColor(0.518f, 0.8f, 1.0f, 1.0f);
 
+	UIManager::getInstance().StartGame();
+
 	TerrainManager::getInstance().Generate();
 
 	float space = (APP_VIRTUAL_WIDTH - 200.0f) / (playerCount - 1);

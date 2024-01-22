@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "TurnManager.h"
-#include "..\GameSettings.h"
 
 #include "EntityManager.h"
 #include "UIManager.h"
@@ -65,6 +64,11 @@ void TurnManager::NextTurn()
         return;
     }
 
+    if (currentTurn >= 0)
+    {
+        EntityManager::getInstance().GetTank(currentTurn)->EndTurn();
+    }
+
     do
     {
         currentTurn++;
@@ -77,7 +81,7 @@ void TurnManager::NextTurn()
 
     UIManager::getInstance().SetCenterMessage("Player " + std::to_string(currentTurn + 1) + " Turn");
     
-    turnDelay = 1.0f;
+    turnDelay = TIME_BETWEEN_TURNS;
 }
 
 void TurnManager::NewTurn()

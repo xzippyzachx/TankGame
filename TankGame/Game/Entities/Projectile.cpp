@@ -14,6 +14,7 @@ std::vector<ProjectileType> Projectile::projectileTypes =
         0,
         "Regular",
         ".\\Resources\\Sprites\\tank_bullet5.png",
+		".\\Resources\\Audio\\shell_dirt.wav",
         34.0f,
         20.0f,
 		0,
@@ -22,6 +23,7 @@ std::vector<ProjectileType> Projectile::projectileTypes =
         1,
         "Explosive",
         ".\\Resources\\Sprites\\tank_bullet3.png",
+		".\\Resources\\Audio\\tank_explosion.wav",
         25.0f,
         50.0f,
 		1,
@@ -89,7 +91,7 @@ void Projectile::CheckHit()
 		part->SetupParticle(projectileType.particleType);
 		part->SetPosition(position);
 
-		App::PlaySound(".\\Resources\\Audio\\shell_dirt.wav");
+		App::PlaySound(projectileType.soundFilename);
 	}
 	else if (hitTank != -1)
 	{
@@ -114,17 +116,17 @@ void Projectile::CheckHit()
 
 int Projectile::CheckTankHit()
 {
-	if (armTime > 0.0f)
-	{
-		return -1;
-	}
-
 	int playerCount = GameManager::getInstance().playerCount;
 	for (int i = 0; i < playerCount; i++)
 	{
 		Tank* tank = EntityManager::getInstance().GetTank(i);
 
 		if (tank->IsDead())
+		{
+			continue;
+		}
+
+		if (tank->GetId() == tankShotBy->GetId() && armTime > 0.0f)
 		{
 			continue;
 		}
