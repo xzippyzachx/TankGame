@@ -67,7 +67,7 @@ void Tank::NewTurn()
 	shells = TANK_START_SHELLS;
 	fuel = TANK_START_FUEL;
 
-	UIManager::getInstance().SetTankHealth(health);
+	UIManager::getInstance().SetTankHealth(health, id);
 	UIManager::getInstance().SetTankFuel(fuel);
 	UIManager::getInstance().SetTurretAngle(turretAngle);
 	UIManager::getInstance().SetTurretPower(turretPower);
@@ -89,7 +89,7 @@ void Tank::Damage(float amount)
 		Die();
 	}
 
-	UIManager::getInstance().SetTankHealth(health);
+	UIManager::getInstance().SetTankHealth(health, id);
 
 	App::PlaySound(".\\Resources\\Audio\\tank_hit.wav");
 }

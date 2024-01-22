@@ -24,7 +24,7 @@ public:
 	void SetCenterMessage(std::string msg);
 
 	void SetCurrentPlayer(int id);
-	void SetTankHealth(float health);
+	void SetTankHealth(float health, int tankId);
 	void SetTankFuel(float fuel);
     void SetTurretAngle(float angle);
     void SetTurretPower(float power);
@@ -38,7 +38,7 @@ private:
     void operator=(UIManager const&);
 	////////
 
-	std::string playerCount;
+	int playerCount;
 
 	std::string centerMessage;
 
@@ -49,6 +49,8 @@ private:
     std::string turretPower;
 
 	std::string selectedProjectile;
+
+	std::vector<std::string> tankHealthList;
 
 	CSimpleSprite* controls;
 };

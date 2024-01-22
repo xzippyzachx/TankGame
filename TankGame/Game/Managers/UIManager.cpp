@@ -8,6 +8,13 @@ UIManager::UIManager()
     controls = App::CreateSprite(".\\Resources\\Sprites\\controls_screen.png", 1, 1);
     controls->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
     controls->SetScale(0.66666f);
+
+    for (int i = 0; i < PLAYER_COUNT_MAX; ++i)
+    {
+        std::string health = std::to_string(TANK_START_HEALTH);
+        health = health.substr(0, health.find("."));
+        tankHealthList.push_back(health);
+    }
 }
 
 void UIManager::operator=(UIManager const&)
@@ -21,29 +28,38 @@ void UIManager::Draw()
     if (gameState == GameState::STARTING)
     {
         controls->Draw();
-        App::Print((APP_VIRTUAL_WIDTH / 2.0f) - ("Player Count: " + playerCount).size() * 4.0f, APP_VIRTUAL_HEIGHT / 2.0f, ("Player Count: " + playerCount).c_str(), 1, 1, 1, GLUT_BITMAP_9_BY_15);
+        std::string drawPlayerCount = "Player Count: " + std::to_string(playerCount);
+        App::Print((APP_VIRTUAL_WIDTH / 2.0f) - drawPlayerCount.size() * 4.0f, APP_VIRTUAL_HEIGHT / 2.0f, drawPlayerCount.c_str(), 1, 1, 1, GLUT_BITMAP_9_BY_15);
     }
     else if (gameState == GameState::PLAYING || gameState == GameState::GAMEOVER)
 	{
         App::Print((APP_VIRTUAL_WIDTH / 2.0f) - centerMessage.size() * 4.0f, APP_VIRTUAL_HEIGHT / 2.0f, centerMessage.c_str(), 1, 1, 1, GLUT_BITMAP_9_BY_15);
 
-        App::Print(10, APP_VIRTUAL_HEIGHT - 20, ("Player " + currentPlayer).c_str());
+        App::Print(10, APP_VIRTUAL_HEIGHT - 20, ("Turn: Player " + currentPlayer).c_str());
         App::Print(10, APP_VIRTUAL_HEIGHT - 40, ("Health: " + tankHealth).c_str());
         App::Print(10, APP_VIRTUAL_HEIGHT - 60, ("Fuel: " + tankFuel).c_str());
         App::Print(10, APP_VIRTUAL_HEIGHT - 80, ("Angle: " + turretAngle).c_str());
         App::Print(10, APP_VIRTUAL_HEIGHT - 100, ("Power: " + turretPower).c_str());
         App::Print(10, APP_VIRTUAL_HEIGHT - 120, ("Shell: " + selectedProjectile).c_str());
+
+        App::Print(APP_VIRTUAL_WIDTH - 130, APP_VIRTUAL_HEIGHT - 20, "-Health-");
+        
+        for (int i = 0; i < playerCount; i++)
+        {
+            App::Print(APP_VIRTUAL_WIDTH - 130, APP_VIRTUAL_HEIGHT - 20 * (float)(i + 1.0f) - 20, ("Player " + std::to_string(i + 1) + ": " + tankHealthList[i]).c_str());
+        }
     }
 }
 
 void UIManager::Destroy()
 {
+    tankHealthList.clear();
     delete controls;
 }
 
 void UIManager::SetPlayerCount(int count)
 {
-    playerCount = std::to_string(count);
+    playerCount = count;
 }
 
 void UIManager::SetCenterMessage(std::string msg)
@@ -56,10 +72,12 @@ void UIManager::SetCurrentPlayer(int id)
     currentPlayer = std::to_string(id + 1);
 }
 
-void UIManager::SetTankHealth(float health)
+void UIManager::SetTankHealth(float health, int tankId)
 {
     tankHealth = std::to_string(health);
     tankHealth = tankHealth.substr(0, tankHealth.find("."));
+
+    tankHealthList[tankId] = tankHealth;
 }
 
 void UIManager::SetTankFuel(float fuel)

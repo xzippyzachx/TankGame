@@ -140,9 +140,9 @@ void GameManager::ChangePlayerCount(bool dir)
 	{
 		playerCount = 2;
 	}
-	else if (playerCount > 4)
+	else if (playerCount > PLAYER_COUNT_MAX)
 	{
-		playerCount = 4;
+		playerCount = PLAYER_COUNT_MAX;
 	}
 
 	UIManager::getInstance().SetPlayerCount(playerCount);
