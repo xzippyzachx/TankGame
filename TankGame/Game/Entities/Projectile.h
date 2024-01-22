@@ -9,6 +9,7 @@ struct ProjectileType
     char* filename;
     float damage;
     float terrainRadius;
+    int particleType;
 };
 
 class Projectile : public Entity

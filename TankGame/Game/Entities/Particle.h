@@ -1,12 +1,12 @@
 #pragma once
 #include "Entity.h"
 
-enum ParticleType
+struct ParticleType
 {
-    SHELL_SMOKE,
-    TANK_EXPLODE,
-    TANK_SPARK,
-    TANK_HIGHLIGHT,
+    int id;
+    std::string name;
+    char* filename;
+    int frameCount;
 };
 
 class Particle : public Entity
@@ -16,8 +16,10 @@ public:
 	void Update(float dt) override;
     void Destroy() override;
 
-    void SetupParticle(ParticleType type);
+    void SetupParticle(int type);
 protected:
-    int frameCount = 1;
+    ParticleType particleType;
+
+    static std::vector<ParticleType> particleTypes;
 };
 

@@ -15,14 +15,16 @@ std::vector<ProjectileType> Projectile::projectileTypes =
         "Regular",
         ".\\Resources\\Sprites\\tank_bullet5.png",
         34.0f,
-        20.0f
+        20.0f,
+		0,
     },
     {
-        0,
+        1,
         "Explosive",
         ".\\Resources\\Sprites\\tank_bullet3.png",
         25.0f,
-        50.0f
+        50.0f,
+		1,
     },
 };
 
@@ -84,7 +86,7 @@ void Projectile::CheckHit()
 		TerrainManager::getInstance().Explode(position, projectileType.terrainRadius);
 
 		Particle* part = EntityManager::getInstance().CreateParticle();
-		part->SetupParticle(ParticleType::SHELL_SMOKE);
+		part->SetupParticle(projectileType.particleType);
 		part->SetPosition(position);
 
 		App::PlaySound(".\\Resources\\Audio\\shell_dirt.wav");
@@ -96,7 +98,7 @@ void Projectile::CheckHit()
 		EntityManager::getInstance().GetTank(hitTank)->Damage(projectileType.damage);
 
 		Particle* part = EntityManager::getInstance().CreateParticle();
-		part->SetupParticle(ParticleType::TANK_SPARK);
+		part->SetupParticle(2);
 		part->SetPosition(position);
 	}
 

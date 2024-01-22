@@ -259,7 +259,7 @@ void Tank::Die()
 	health = 0.0f;
 
 	Particle* part = EntityManager::getInstance().CreateParticle();
-	part->SetupParticle(ParticleType::TANK_EXPLODE);
+	part->SetupParticle(1);
 	part->SetPosition(position);
 
 	sprites.clear();
@@ -307,6 +307,6 @@ void Tank::TurretSound(bool play)
 void Tank::Highlight()
 {
 	Particle* part = EntityManager::getInstance().CreateParticle();
-	part->SetupParticle(ParticleType::TANK_HIGHLIGHT);
+	part->SetupParticle(3);
 	part->SetPosition(position);
 }
