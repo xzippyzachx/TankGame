@@ -32,6 +32,7 @@ void UIManager::Draw()
         App::Print(10, APP_VIRTUAL_HEIGHT - 60, ("Fuel: " + tankFuel).c_str());
         App::Print(10, APP_VIRTUAL_HEIGHT - 80, ("Angle: " + turretAngle).c_str());
         App::Print(10, APP_VIRTUAL_HEIGHT - 100, ("Power: " + turretPower).c_str());
+        App::Print(10, APP_VIRTUAL_HEIGHT - 120, ("Shell: " + selectedProjectile).c_str());
     }
 }
 
@@ -77,4 +78,9 @@ void UIManager::SetTurretPower(float power)
 {
     turretPower = std::to_string(power);
     turretPower = turretPower.substr(0, turretPower.find("."));
+}
+
+void UIManager::SetSelectedProjectile(std::string projectile)
+{
+    selectedProjectile = projectile;
 }

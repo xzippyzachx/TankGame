@@ -2,6 +2,15 @@
 #include "Entity.h"
 #include "Tank.h"
 
+struct ProjectileType
+{
+    int id;
+    std::string name;
+    char* filename;
+    float damage;
+    float terrainRadius;
+};
+
 class Projectile : public Entity
 {
 public:
@@ -9,18 +18,21 @@ public:
 	void Update(float dt) override;
     void Destroy() override;
 
-    void SetShotBy(Tank* tank) { tankShotBy = tank; }
+    void SetupProjectile(int type, Tank* tank);
     void SetVelocity(Vector2 vel);
+
+    static ProjectileType GetProjectileType(int type) { return projectileTypes[type]; }
 protected:
+    ProjectileType projectileType;
     Tank* tankShotBy;
 
     Vector2 velocity;
-    float damage = 25.0f;
     float armTime = 0.01f;
 
     void SimulatePhysics(float dt);
     void CheckHit();
     int CheckTankHit();
     void UpdateAngle();
-};
 
+    static std::vector<ProjectileType> projectileTypes;
+};

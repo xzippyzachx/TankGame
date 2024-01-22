@@ -30,7 +30,7 @@ public:
     void Generate();
 
     float GetFloor(float x);
-    void Explode(Vector2 position);
+    void Explode(Vector2 position, float radius);
 
 	void Reset();
     

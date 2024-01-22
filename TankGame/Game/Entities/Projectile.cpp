@@ -8,9 +8,26 @@
 #include "..\Managers\TurnManager.h"
 #include "..\Managers\GameManager.h"
 
+std::vector<ProjectileType> Projectile::projectileTypes =
+{
+    {
+        0,
+        "Regular",
+        ".\\Resources\\Sprites\\tank_bullet5.png",
+        34.0f,
+        20.0f
+    },
+    {
+        0,
+        "Explosive",
+        ".\\Resources\\Sprites\\tank_bullet3.png",
+        25.0f,
+        50.0f
+    },
+};
+
 Projectile::Projectile() : Entity()
 {
-	SetSprite(".\\Resources\\Sprites\\tank_bullet5.png", Vector2(0.0f, 0.0f));
 }
 
 void Projectile::Update(float dt)
@@ -29,6 +46,14 @@ void Projectile::Update(float dt)
 void Projectile::Destroy()
 {
 	Entity::Destroy();
+}
+
+void Projectile::SetupProjectile(int type, Tank* tank)
+{
+	projectileType = projectileTypes[type];
+	SetSprite(projectileType.filename, Vector2(0.0f, 0.0f));
+
+	tankShotBy = tank;
 }
 
 void Projectile::SimulatePhysics(float dt)
@@ -56,7 +81,7 @@ void Projectile::CheckHit()
 
 	if (hitTerrain)
 	{
-		TerrainManager::getInstance().Explode(position);
+		TerrainManager::getInstance().Explode(position, projectileType.terrainRadius);
 
 		Particle* part = EntityManager::getInstance().CreateParticle();
 		part->SetupParticle(ParticleType::SHELL_SMOKE);
@@ -66,7 +91,9 @@ void Projectile::CheckHit()
 	}
 	else if (hitTank != -1)
 	{
-		EntityManager::getInstance().GetTank(hitTank)->Damage(damage);
+		TerrainManager::getInstance().Explode(position, projectileType.terrainRadius);
+
+		EntityManager::getInstance().GetTank(hitTank)->Damage(projectileType.damage);
 
 		Particle* part = EntityManager::getInstance().CreateParticle();
 		part->SetupParticle(ParticleType::TANK_SPARK);
@@ -100,8 +127,7 @@ int Projectile::CheckTankHit()
 			continue;
 		}
 
-		Vector2 tankPos = tank->GetPosition();
-		if (position.Distance(Vector2(tankPos.x, tankPos.y -5.0f)) < 20.0f) // ToDo: Should really make a collider class that handles collisions
+		if (tank->Collide(position))
 		{
 			return tank->GetId();
 		}

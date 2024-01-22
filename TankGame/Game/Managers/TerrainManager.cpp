@@ -120,13 +120,13 @@ float TerrainManager::GetFloor(float x)
     return floor;
 }
 
-void TerrainManager::Explode(Vector2 position)
+void TerrainManager::Explode(Vector2 position, float radius)
 {
     std::unordered_map<Vector2, Color, Vector2::HashFunction> newTiles;
 
     for (auto& tile : tiles)
 	{
-        if (!(position.Distance(tile.first) < 25.0f))
+        if (!(position.Distance(tile.first) <= radius))
         {
             newTiles.insert({ tile.first, tile.second });
         }

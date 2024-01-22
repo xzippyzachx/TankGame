@@ -28,6 +28,8 @@ public:
 	void SetTankFuel(float fuel);
     void SetTurretAngle(float angle);
     void SetTurretPower(float power);
+
+	void SetSelectedProjectile(std::string projectile);
 private:
 	// Singlton pattern
 	////////
@@ -45,6 +47,8 @@ private:
 	std::string tankFuel;
     std::string turretAngle;
     std::string turretPower;
+
+	std::string selectedProjectile;
 
 	CSimpleSprite* controls;
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+
 class Tank : public Entity
 {
 public:
@@ -16,6 +17,7 @@ public:
 	bool IsDead() { return dead; }
 	void Winner();
 	int GetShells() { return shells; }
+	bool Collide(Vector2 pos);
 protected:
 	static int nextId;
 	int id;
@@ -34,11 +36,13 @@ protected:
 	float health = 100.0f;
 
 	int shells = 1;
+	int selectedProjectile = 0;
 
 	void ProcessInput(float dt);
 	void Move(float dt, float inputX);
 	void Angle(float dt, float inputX);
 	void Power(float dt, float inputY);
+	void SelectProjectile(int input);
 	void Fire();
 	void Die();
 	void EngineSound(bool play);

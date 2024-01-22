@@ -7,7 +7,7 @@
 #include "..\Managers\TurnManager.h"
 
 #include "Tank.h"
-
+#include "Projectile.h"
 
 int Tank::nextId = 0;
 int Tank::deadAmount = 0;
@@ -71,6 +71,7 @@ void Tank::NewTurn()
 	UIManager::getInstance().SetTankFuel(fuel);
 	UIManager::getInstance().SetTurretAngle(turretAngle);
 	UIManager::getInstance().SetTurretPower(turretPower);
+	UIManager::getInstance().SetSelectedProjectile(Projectile::GetProjectileType(selectedProjectile).name);
 
 	Highlight();
 }
@@ -99,6 +100,11 @@ void Tank::Winner()
 	fuel = 1000.0f;
 }
 
+bool Tank::Collide(Vector2 pos)
+{
+    return pos.Distance(Vector2(position.x, position.y -5.0f)) < 20.0f;
+}
+
 void Tank::ProcessInput(float dt)
 {
 	if (TurnManager::getInstance().GetCurrentTurn() != id || dead)
@@ -109,6 +115,15 @@ void Tank::ProcessInput(float dt)
 	Move(dt, App::GetController().GetLeftThumbStickX());
 	Angle(dt, App::GetController().GetRightThumbStickX());
 	Power(dt, App::GetController().GetRightThumbStickY());
+
+	if (App::GetController().CheckButton(XINPUT_GAMEPAD_DPAD_LEFT, true))
+	{
+		SelectProjectile(0);
+	}
+	if (App::GetController().CheckButton(XINPUT_GAMEPAD_DPAD_RIGHT, true))
+	{
+		SelectProjectile(1);
+	}
 
 	if (App::GetController().CheckButton(XINPUT_GAMEPAD_A, true))
 	{
@@ -207,6 +222,12 @@ void Tank::Power(float dt, float inputY)
 	UIManager::getInstance().SetTurretPower(turretPower);
 }
 
+void Tank::SelectProjectile(int input)
+{
+	selectedProjectile = input;
+	UIManager::getInstance().SetSelectedProjectile(Projectile::GetProjectileType(selectedProjectile).name);
+}
+
 void Tank::Fire()
 {
 	if (shells <= 0)
@@ -216,7 +237,7 @@ void Tank::Fire()
 	shells--;
 
 	Projectile* newProjectile = EntityManager::getInstance().CreateProjectile();
-	newProjectile->SetShotBy(this);
+	newProjectile->SetupProjectile(selectedProjectile, this);
 	newProjectile->SetPosition(Vector2(position.x - 2.0f, position.y + 10.0f));
 
 	// std::cout << "Radians: " << turretAngle * (PI / 180.0f) <<"\n";

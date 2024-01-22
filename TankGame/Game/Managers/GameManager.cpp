@@ -66,6 +66,7 @@ void GameManager::Update(float dt)
 
 		if (App::GetController().CheckButton(XINPUT_GAMEPAD_X, true))
 		{
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			ResetGame();
 			gameState = GameState::STARTING;
 		}
