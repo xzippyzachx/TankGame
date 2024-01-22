@@ -64,8 +64,8 @@ void Tank::NewTurn()
 		TurnManager::getInstance().NextTurn();
 	}
 
-	shells = 1;
-	fuel = 100.0f;
+	shells = TANK_START_SHELLS;
+	fuel = TANK_START_FUEL;
 
 	UIManager::getInstance().SetTankHealth(health);
 	UIManager::getInstance().SetTankFuel(fuel);

@@ -29,13 +29,13 @@ protected:
 	float turretAngle = 150.0f;
 	float turretPower = 50.0f;
 
-	float fuel = 100.0f;
+	float fuel = TANK_START_FUEL;
 
 	static int deadAmount;
 	bool dead = false;
-	float health = 100.0f;
+	float health = TANK_START_HEALTH;
 
-	int shells = 1;
+	int shells = TANK_START_SHELLS;
 	int selectedProjectile = 0;
 
 	void ProcessInput(float dt);
