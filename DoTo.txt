@@ -1,0 +1,30 @@
+ToDo:
+// Control screen
+// Select player count
+
+// Fall out of world death
+// Tank indication of whos turn it is
+
+// Background trees and clouds
+Terrain dirt color noise
+
+No fuel indicator
+
+// Different projectiles
+
+// Player health list
+
+No Time:
+Air drops (Shells, health, etc)
+AI Tanks
+
+// Submit resume
+// Documentation
+// Video
+Submit project
+
+Bugs:
+// Projectile.cpp - Check how many shells are left before next turn
+// Fix controller inputs
+// Stop tank audio on turn end
+Fix terrain jumping on first explode
